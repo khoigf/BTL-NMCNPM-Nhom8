@@ -7,10 +7,19 @@ CREATE TABLE users (
     user_email varchar(50),
     user_address varchar(100)
 );
+insert into users
+values(
+        1,
+        'Lan',
+        '123',
+        '0321554618',
+        'Lancute@gmail.com',
+        'Ha Dong, Ha Noi'
+    );
 CREATE TABLE admins (
     admin_id int primary key,
     admin_username varchar(50),
-    admin_password varchar(50),
+    admin_password varchar(50)
 );
 INSERT INTO admins
 VALUES(1, 'ADMIN', 'admin');
@@ -21,11 +30,24 @@ CREATE TABLE flights (
     f_date varchar(50),
     f_source varchar(50),
     f_dest varchar(50),
-    f_dest_time varchar(50),
+    f_dept_time varchar(50),
     f_arr_time varchar(50),
     f_fare int,
     f_remseats int
 );
+INSERT INTO flights
+values (
+        1,
+        '33527',
+        'Economic',
+        '2024-01-20',
+        'Ha Noi',
+        'Ho Chi Minh',
+        '12:00',
+        '16:00',
+        500000,
+        70
+    );
 CREATE TABLE bookings (
     b_id int primary key,
     b_user_id int,

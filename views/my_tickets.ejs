@@ -1,97 +1,112 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title></title>
-    </head>
-    <body>
-        
-        <div class="container">
-            <h1 class="text-center mt-3 mb-3">Your Ticket Bookings</h1>
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row">
-        
-                            <div class="col">
-                                <a href= "/project/login/user/<%= sampleData[sampleData.length-1].user_id %>" class="btn btn-info  float-end">Back to Home Page</a>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-                    <div class="card-header">
-                        <% if(message.success) { %>
-                            <div class="alert alert-success">
-                                <%= message.success %>
-                            </div>
-                        <% } %>
-                        
-                        <% if(message.info) { %>
-                                <div class="alert alert-danger">
-                                    <%= message.info %>
-                                </div>
-                        <% } %>
-                    </div>
-       
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th>Booking Id</th>
-                                    <th>User _Id</th>
-                                    <th>Flight Id</th>
-                                    <th>Flight Number</th>
-                                    <th>Airlines</th>
-                                    <th>Flight Date</th>
-                                    <th>Passenger Name </th>
-                                    <th>Age</th>
-                                    <th>Gender</th>
-                                    <th>Action</th>
-                                </tr>
-                                <%
-                                if(sampleData.length > 1)
-                                {
-                                    for(i=0; i < sampleData.length -1;i++)
-                                    {
-                                %>
-                                <tr>
-                                    <td><%= sampleData[i].b_id %></td>
-                                    <td><%= sampleData[i].b_user_id %></td>
-                                    <td><%= sampleData[i].b_f_id %></td>
-                                    <td><%= sampleData[i].b_f_number %></td>
-                                    <td><%= sampleData[i].b_f_type %></td>
-                                    <td><%= sampleData[i].b_f_date %></td>
-                                    <td><%= sampleData[i].b_pas_name %></td>
-                                    <td><%= sampleData[i].b_pas_age%></td>
-                                    <td><%= sampleData[i].b_pas_gender %></td>
-                                    <td>
-                                        <a href = "/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/my_tickets/cancel/<%= sampleData[i].b_id %>" class = "btn btn-danger btn-sm">Cancel Ticket</a>
-                                    </td>
-                                    
-                                </tr>
-                                <%
-                                    };
-                                }
-                                else
-                                {
-                                %>
-                                <tr>
-                                    <td colspan="5">You have no bookings</td>
-                                </tr>
-                                <%
-                                }
-                                %>
-                            </table>
-                        </div>
+    <title></title>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 class="text-center mt-3 mb-3">Your Ticket Bookings</h1>
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+
+                    <div class="col">
+                        <a href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>"
+                            class="btn btn-info  float-end">Back to Home Page</a>
                     </div>
                 </div>
-        </div>  
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    </body>
+            </div>
+
+            <div class="card-header">
+                <% if(message.success) { %>
+                    <div class="alert alert-success">
+                        <%= message.success %>
+                    </div>
+                    <% } %>
+
+                        <% if(message.info) { %>
+                            <div class="alert alert-danger">
+                                <%= message.info %>
+                            </div>
+                            <% } %>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Booking Id</th>
+                            <th>User _Id</th>
+                            <th>Flight Id</th>
+                            <th>Flight Number</th>
+                            <th>Flight Type</th>
+                            <th>Flight Date</th>
+                            <th>Passenger Name </th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>Action</th>
+                        </tr>
+                        <% if(sampleData.length> 1)
+                            {
+                            for(i=0; i < sampleData.length -1;i++) { %>
+                                <tr>
+                                    <td>
+                                        <%= sampleData[i].b_id %>
+                                    </td>
+                                    <td>
+                                        <%= sampleData[i].b_user_id %>
+                                    </td>
+                                    <td>
+                                        <%= sampleData[i].b_f_id %>
+                                    </td>
+                                    <td>
+                                        <%= sampleData[i].b_f_number %>
+                                    </td>
+                                    <td>
+                                        <%= sampleData[i].b_f_type %>
+                                    </td>
+                                    <td>
+                                        <%= sampleData[i].b_f_date %>
+                                    </td>
+                                    <td>
+                                        <%= sampleData[i].b_pas_name %>
+                                    </td>
+                                    <td>
+                                        <%= sampleData[i].b_pas_age%>
+                                    </td>
+                                    <td>
+                                        <%= sampleData[i].b_pas_gender %>
+                                    </td>
+                                    <td>
+                                        <a href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/my_tickets/cancel/<%= sampleData[i].b_id %>"
+                                            class="btn btn-danger btn-sm">Cancel Ticket</a>
+                                    </td>
+
+                                </tr>
+                                <% }; } else { %>
+                                    <tr>
+                                        <td colspan="5">You have no bookings</td>
+                                    </tr>
+                                    <% } %>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
 </html>
-    
