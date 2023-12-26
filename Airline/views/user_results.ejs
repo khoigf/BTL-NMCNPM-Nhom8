@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+        <title></title>
+    </head>
+    <body>
+        
+        <div class="container">
+            <h1 class="text-center mt-3 mb-3">Available Flights</h1>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+        
+                            <div class="col">
+                                <a href= "/project/login/user/<%= sampleData[sampleData.length-1].user_id %>" class="btn btn-info  float-end">Back to User Portal</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-header">
+                        <% if(message.success) { %>
+                            <div class="alert alert-success">
+                                <%= message.success %>
+                            </div>
+                        <% } %>
+                        
+                        <% if(message.fail) { %>
+                                <div class="alert alert-danger">
+                                    <%= message.fail %>
+                                </div>
+                        <% } %>
+                    </div>
+       
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>Flight Id</th>
+                                    <th>Flight Number</th>
+                                    <th>Type</th>
+                                    <th>Date</th>
+                                    <th>Source</th>
+                                    <th>Dest</th>
+                                    <th>Dept Time</th>
+                                    <th>Arr Time</th>
+                                    <th>Fare</th>
+                                    <th>Rem seats</th>
+                                    <th>Action</th>
+                                </tr>
+                                <%
+                                if(sampleData.length > 1)
+                                {
+                                    for(i=0; i < sampleData.length -1;i++)
+                                    {
+                                %>
+                                <tr>
+                                    <td><%= sampleData[i].f_id %></td>
+                                    <td><%= sampleData[i].f_number %></td>
+                                    <td><%= sampleData[i].f_type %></td>
+                                    <td><%= sampleData[i].f_date %></td>
+                                    <td><%= sampleData[i].f_source %></td>
+                                    <td><%= sampleData[i].f_dest %></td>
+                                    <td><%= sampleData[i].f_dept_time %></td>
+                                    <td><%= sampleData[i].f_arr_time %></td>
+                                    <td><%= sampleData[i].f_fare %></td>
+                                    <td><%= sampleData[i].f_remseats %></td>
+                                    <td>
+                                        <a href = "/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/form_submit/booking/<%= sampleData[i].f_id %>" class = "btn btn-primary btn-sm">Book Ticket</a>
+                                    </td>
+                                    
+                                </tr>
+                                <%
+                                    };
+                                }
+                                else
+                                {
+                                %>
+                                <tr>
+                                    <td colspan="5">No Flights Available</td>
+                                </tr>
+                                <%
+                                }
+                                %>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>  
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    </body>
+</html>
+    
