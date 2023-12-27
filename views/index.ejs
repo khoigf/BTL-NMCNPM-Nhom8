@@ -6,17 +6,61 @@
     <%= title %>
   </title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <style>
+    /* Thêm một số CSS để trang trí navbar */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #333;
+      padding: 15px;
+      text-align: center;
+      color: white;
+    }
+
+    nav {
+      display: flex;
+      justify-content: flex-end;
+      background-color: #555;
+      padding: 10px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+    }
+
+    nav a:hover {
+      background-color: #777;
+    }
+  </style>
 </head>
 
 <body>
+
+  <!-- Navbar -->
+  <nav>
+    <a href="/project">Login</a>
+  </nav>
   <h1>
     <%= title %>
   </h1>
-
   <!-- Mô tả giới thiệu -->
   <p>
     Chào mừng đến với <%= title %>. Hãy trải nghiệm chuyến đi của bạn cùng chúng tôi!
   </p>
+
+  <script>
+    // Thêm đoạn mã JavaScript để xử lý chuyển hướng khi nhấp vào nút "Login"
+    document.querySelector('nav a').addEventListener('click', function () {
+      window.location.href = '/project';
+    });
+  </script>
+
 </body>
 
 </html>
