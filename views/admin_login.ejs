@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,47 +11,99 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Login System for Admin</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .card {
+            border: 2px solid #007bff;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 15px 15px 0 0;
+            padding: 15px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .form-label {
+            font-size: 16px;
+        }
+
+        .form-control {
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .btn-user-login {
+            width: 100%;
+            font-size: 16px;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
         <h1 class="mt-5 mb-5 text-center text-primary"><b>Admin Login</b></h1>
-        <div class="card">
-            <div class="card-header">
-                <% if(message.success) { %>
-                    <div class="alert alert-success">
-                        <%= message.success %>
-                    </div>
-                    <% } %>
-
-                        <% if(message.fail) { %>
-                            <div class="alert alert-danger">
-                                <%= message.fail %>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6 mb-3 mt-3">
+                <div class="card">
+                    <div class="card-header">
+                        <% if(message.success) { %>
+                            <div class="alert alert-success">
+                                <%= message.success %>
                             </div>
                             <% } %>
-            </div>
-            <div class="card-body">
-                <form method="post" action="/project/admin_login">
-                    <div class="mb-3">
-                        <label>Username</label>
-                        <input type="text" name="user_name" class="form-control" />
-                    </div>
-                    <div class="mb-3">
-                        <label>Password</label>
-                        <input type="password" name="user_password" class="form-control" />
-                    </div>
 
-                    <div class="mb-3">
-                        <input type="submit" class="btn btn-primary" value="Admin Login" />
+                                <% if(message.fail) { %>
+                                    <div class="alert alert-danger">
+                                        <%= message.fail %>
+                                    </div>
+                                    <% } %>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="/project/admin_login">
+                            <div class="mb-3">
+                                <label for="user_name" class="form-label">Username</label>
+                                <input type="text" id="user_name" name="user_name" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="user_password" class="form-label">Password</label>
+                                <input type="password" id="user_password" name="user_password" class="form-control" />
+                            </div>
 
+                            <div class="mb-3">
+                                <input type="submit" class="btn btn-primary" value="Admin Login" />
+                            </div>
+                            <div class="mb-4">
+                                <a href="/project" class="btn btn-primary btn-user-login">Login as User</a>
+                            </div>
+                        </form>
                     </div>
-                    <div class="mb-4">
-                        <a href="/project" class="btn btn-primary">Login as User</a>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
-
+        <div class="col-sm-3"></div>
     </div>
 </body>
 

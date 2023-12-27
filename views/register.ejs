@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -10,86 +10,125 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title></title>
+    <title>User Registration</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .card {
+            border: 2px solid #007bff;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 15px 15px 0 0;
+            padding: 15px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .form-label {
+            font-size: 16px;
+        }
+
+        .form-control {
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .btn-info {
+            font-size: 16px;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
-        <h1 class="text-center mt-3 mb-3">Enter User details</h1>
-        <div class="card">
-            <div class="card-header">
-                <div class="row">
-                    <div class=col>
-                        <% if(message.success) { %>
-                            <div class="alert alert-success">
-                                <%= message.success %>
-                            </div>
-                            <% } %>
-
-                                <% if(message.fail) { %>
-                                    <div class="alert alert-danger">
-                                        <%= message.fail %>
+        <h1 class="text-center mt-3 mb-3">Enter User Details</h1>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6 mb-3 mt-3">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <% if(message.success) { %>
+                                    <div class="alert alert-success">
+                                        <%= message.success %>
                                     </div>
                                     <% } %>
+                                        <% if(message.fail) { %>
+                                            <div class="alert alert-danger">
+                                                <%= message.fail %>
+                                            </div>
+                                            <% } %>
+                            </div>
+                            <div class="col text-end">
+                                <a href="/project" class="btn btn-info">Back to Login Page</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col">
-                        <a href="/project" class="btn btn-info  float-end">Back to Login Page</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <form method="POST" action="/project/register">
-                    <div class="row">
-                        <div class="col-md-4">
+                    <div class="card-body">
+                        <form method="POST" action="/project/register">
                             <div class="mb-3">
-                                <label>User Id</label>
+                                <label for="user_id" class="form-label">User Id</label>
                                 <input type="text" name="user_id" id="user_id" class="form-control"
                                     value="<%= sampleData && sampleData.length ? sampleData[sampleData.length - 1].user_id + 1 : '' %>"
                                     readonly />
                             </div>
-                        </div>
-                        <div class="col-md-4">
+
                             <div class="mb-3">
-                                <label>User Name</label>
+                                <label for="user_name" class="form-label">User Name</label>
                                 <input type="text" name="user_name" id="user_name" class="form-control" />
                             </div>
-                        </div>
-                        <div class="col-md-4">
+
                             <div class="mb-3">
-                                <label>Create Password</label>
-                                <input type="text" name="pass" id="pass" class="form-control" />
+                                <label for="pass" class="form-label">Create Password</label>
+                                <input type="password" name="pass" id="pass" class="form-control" />
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
+
                             <div class="mb-3">
-                                <label> Mobile </label>
+                                <label for="mobile" class="form-label">Mobile</label>
                                 <input type="number" name="mobile" id="mobile" class="form-control" />
                             </div>
-                        </div>
-                        <div class="col-md-4">
+
                             <div class="mb-3">
-                                <label>Email Id</label>
+                                <label for="email" class="form-label">Email Id</label>
                                 <input type="email" name="email" id="email" class="form-control" />
                             </div>
-                        </div>
-                        <div class="col-md-4">
+
                             <div class="mb-3">
-                                <label>Address</label>
+                                <label for="addr" class="form-label">Address</label>
                                 <input type="text" name="addr" id="addr" class="form-control" />
                             </div>
-                        </div>
 
-
+                            <div class="mb-3">
+                                <input type="submit" name="submit_button" class="btn btn-primary" value="Sign Up" />
+                            </div>
+                        </form>
                     </div>
-                    <div class="mb-3">
-
-                        <input type="submit" name="submit_button" class="btn btn-primary" value="Sign Up" />
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
+        <div class="col-sm-3"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
