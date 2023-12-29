@@ -1,4 +1,4 @@
-use sys;
+use hust_airline;
 CREATE TABLE users (
     user_id int primary key,
     user_name varchar(50),
