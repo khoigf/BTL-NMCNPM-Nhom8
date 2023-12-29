@@ -1,51 +1,24 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
 
+var middleware = require('./middleware/middleware')
+var configViewEngine = require('./config/viewEngine');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var projectRouter = require('./routes/project');
 
-var session = require('express-session');
-var flash = require('connect-flash');
 
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+configViewEngine(app);
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/static', express.static(path.join(__dirname, 'image')))
-
-
-app.use(session({
-  secret : 'omsaran',
-  cookie : {maxAge : 60000},
-  saveUninitialized : false,
-  resave : false
-}));
-
-app.use(flash());
+middleware(app);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/project',projectRouter);
-
-app.use(session({
-  secret : 'omsaran',
-  cookie : {maxAge : 60000},
-  saveUninitialized : false,
-  resave : false
-}));
-
-app.use(flash());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
