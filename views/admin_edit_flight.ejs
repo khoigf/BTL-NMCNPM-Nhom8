@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-w6Pki3I2GzGX1fNfUZEFvqivxBof10j9DFOON92kFoE77p1az0F+O5lBR+QDE3dF" crossorigin="anonymous">
+        <style>
+            body {
+                background-color: #f8f9fa;
+                font-family: 'Arial', sans-serif;
+                padding: 20px;
+            }
+    
+            .container {
+                max-width: 800px;
+            }
+    
+            h1, h2 {
+                color: #007bff;
+            }
+            
+            #sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 20px;
+            }
+            table {
+                width: 100%;
+                margin-top: 20px;
+                border-collapse: collapse;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            }
+    
+            th, td {
+                padding: 12px;
+                text-align: left;
+                border-bottom: 1px solid #dee2e6;
+            }
+    
+            tbody tr:hover {
+                background-color: #f5f5f5;
+            }
+    
+            button {
+                margin-top: 20px;
+            }
+        </style>
+    <title>Flight Editor - Admin Page</title>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Flight Editor</h1>
+
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Flight Number</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Source</th>
+                    <th>Destination</th>
+                    <th>Departure Time</th>
+                    <th>Arrival Time</th>
+                    <th>Fare</th>
+                    <th>Remaining Seats</th>
+                    <!-- Add more columns as needed -->
+                </tr>
+            </thead>
+            <tbody>
+                <% for (let flight of flights) { %>
+                    <tr>
+                        <td><%= flight.f_id %></td>
+                        <td><%= flight.f_number %></td>
+                        <td><%= flight.f_type %></td>
+                        <td><%= flight.f_date %></td>
+                        <td><%= flight.f_source %></td>
+                        <td><%= flight.f_dest %></td>
+                        <td><%= flight.f_dept_time %></td>
+                        <td><%= flight.f_arr_time %></td>
+                        <td><%= flight.f_fare %></td>
+                        <td><%= flight.f_remseats %></td>
+                        <!-- Add more columns as needed -->
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+        
+        <!-- Add Flight Form -->
+        <div class="mt-4">
+            <h2>Add Flight</h2>
+            <form action="/project/admin_login/admin_edit_flight/add" method="post">
+                <!-- Add form fields for flight details -->
+                <button type="submit" class="btn btn-success">Add Flight</button>
+            </form>
+        </div>
+        
+        <!-- Edit Flight Form -->
+        <div class="mt-4">
+            <h2>Edit Flight</h2>
+            <form action="/project/admin_login/admin_edit_flight/edit" method="post">
+                <!-- Add form fields for selecting and editing flights -->
+                <button type="submit" class="btn btn-warning">Edit Flight</button>
+            </form>
+        </div>
+        
+
+    </div>
+</body>
+</html>

@@ -3,6 +3,7 @@ var read = require('fs');
 var router = express.Router();
 var database = require('../database');
 const { count } = require('console');
+const { response } = require('../app');
 let obj;
 read.readFile('./saved.json' , 'utf-8' , (err , data)=>{
    // console.log(data);
@@ -146,7 +147,7 @@ router.post("/register", function(request, response, next){
 
 router.get("/admin_cred", function(request, response, next){
 
-    response.render('admin_login', {message : request.flash()});       
+    response.render('admin_login', {message : request.flash()});  
 
       
 });
@@ -173,7 +174,8 @@ router.post("/admin_login", function(request, response, next){
                 {
                     if(data[count].admin_password == user_password)
                     {
-                        response.redirect(`/project/admin_login/admin`);
+                        // response.redirect(`/project/admin_login/admin`);
+                        response.redirect(`/project/admin_login/admin_page`)
                     }
                     else
                     {
@@ -198,9 +200,7 @@ router.post("/admin_login", function(request, response, next){
 
 });
 
-
-router.get("/admin_login/admin", function(request, response, next){
-
+router.get("/admin_login/admin_page", function(request, response, next){
     query = `select * from admins`
 
     database.query(query, function(error,data){
@@ -210,63 +210,38 @@ router.get("/admin_login/admin", function(request, response, next){
         }
         else
         {
-            response.render('admin',{sampleData:data[0], message : request.flash()});
+            response.render('admin_page',{sampleData:data[0], message : request.flash()})
         }
     })
-
 });
 
-router.post("/admin_login/admin", function(request, response, next){
+router.get('/admin_login/admin_edit_flight', function(request, response) {
+    let query = 'SELECT * FROM flights';
 
-    var num = request.body.num;
-    var dept = request.body.dept;
-    var arr = request.body.arr;
-    var fare = request.body.fare;
-
-  
-
-    query2 = `update flights
-             set 
-             f_dept_time = "${dept}",
-             f_arr_time = "${arr}",
-             f_fare = "${fare}"
-             where f_number = "${num}"`;
-
-    database.query(query2, function(error){
-        if(error)
-        {
+    database.query(query, function(error, data) {
+        if (error) {
             throw error;
+        } else {
+            response.render('admin_edit_flight', { flights: data, message: request.flash() });
         }
+    });
+  });
 
-        else
-        {
-            query1 = `select * from flights where f_number = "${num}"`;
 
-            database.query(query1, function(error,data){
-                if(error)
-                {
-                    throw error;
-                }
-        
-                if(data.length == 0)
-                {   
-                    request.flash('fail','No flight with given flight number');
-                    response.redirect('/project/admin_login/admin');
-                }
 
-                else
-                {
-                    request.flash('success','Flight details updated successfully');
-                    response.redirect('/project/admin_login/admin');
-                }
-            });
-        }
 
-            
-
+    router.get('/admin_login/admin_edit_user', function(request, response) {
+        let query = 'SELECT * FROM users';
+    
+        database.query(query, function(error, data) {
+            if (error) {
+                throw error;
+            } else {
+                response.render('admin_edit_user', { users: data, message: request.flash() });
+            }
+        });
     });
 
-});
 
 
 router.get("/login/user/:uid", function(request, response, next){

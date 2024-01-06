@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Admin Page</title>
+    <style>
+        body {
+                background-color: #f8f9fa;
+                font-family: 'Arial', sans-serif;
+                padding: 20px;
+            }
+    
+            .container {
+                max-width: 800px;
+            }
+    
+            h1, h2 {
+                color: #007bff;
+            }
+            
+            #sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 20px;
+            }
+            table {
+                width: 100%;
+                margin-top: 20px;
+                border-collapse: collapse;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            }
+    
+            th, td {
+                padding: 12px;
+                text-align: left;
+                border-bottom: 1px solid #dee2e6;
+            }
+    
+            tbody tr:hover {
+                background-color: #f5f5f5;
+            }
+    
+            button {
+                margin-top: 20px;
+            }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+    <h1>User Editor</h1>
+
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <!-- Add more columns as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let user of users) { %>
+                <tr>
+                    <td><%= user.user_id %></td>
+                    <td><%= user.user_name %></td>
+                    <td><%= user.user_email %></td>
+                    <td><%= user.user_mobile %></td>
+                    <td><%= user.user_address %></td>
+                    <!-- Add more columns as needed -->
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+    
+    <!-- Add User Form -->
+    <div class="mt-4">
+    <h2>Add User</h2>
+    <form action="/project/admin_login/admin_edit_user/add" method="post">
+        <!-- Add form fields for user details -->
+        <button type="submit" class="btn btn-success">Add User</button>
+    </form>
+    </div>
+    
+    <!-- Edit User Form -->
+    <div class="mt-4">
+        <h2>Edit User</h2>
+        <form action="/project/admin_login/admin_edit_user/edit" method="post">
+        <!-- Add form fields for selecting and editing users -->
+            <button type="submit" class="btn btn-warning">Edit User</button>
+        </form>
+    </div>
+    
+
+</div>
+</body>
+</html>

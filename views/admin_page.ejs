@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        .wrapper {
+            display: flex;
+        }
+
+        #sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 20px;
+        }
+
+        #content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .dashboard-buttons button {
+            margin-bottom: 10px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <nav id="sidebar">
+            <h2>Admin Dashboard</h2>
+            <p>Welcome, <%= sampleData.admin_username %></p>
+            <div class="dashboard-buttons">
+                <button class="btn btn-primary" onclick="window.location.href='/project/admin_login/admin_page'">Home</button>
+                <button class="btn btn-success" id="redirect_edit_flight">Edit Flight Details</button>
+                <button class="btn btn-warning" id="redirect_edit_user">Edit User Details</button>
+                <!-- Add more buttons as needed for other functionalities -->
+            </div>
+        </nav>
+
+        <div id="content">
+            <h1>Welcome, <%= sampleData.admin_username %></h1>
+            <!-- Content goes here -->
+        </div>
+    </div>
+
+    <script>
+        function redirectTo(url) {
+            fetch(url, {
+                    method: 'GET'
+                })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('content').innerHTML = data;
+                })
+                .catch(error => console.error(error));
+        }
+
+        document.getElementById('redirect_edit_flight').addEventListener('click', () => {
+            redirectTo('/project/admin_login/admin_edit_flight');
+        });
+
+        document.getElementById('redirect_edit_user').addEventListener('click', () => {
+            redirectTo('/project/admin_login/admin_edit_user');
+        });
+        // Add more event listeners for other buttons
+    </script>
+</body>
+
+</html>
