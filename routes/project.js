@@ -214,6 +214,46 @@ router.get("/admin_login/admin_page", function(request, response, next){
     })
 });
 
+// Add new flight route
+router.get('/admin_login/add_flight', function(request, response) {
+    response.render('add_flight', { message: request.flash() });
+});
+
+router.post('/admin_login/add_flight', function(request, response) {
+    // Extract flight details from the form submission
+    var f_id = request.body.f_id;
+    var f_number = request.body.f_number;
+    var f_type = request.body.f_type;
+    var f_date = request.body.f_date;
+    var f_source = request.body.f_source;
+    var f_dest = request.body.f_dest;
+    var f_dept_time = request.body.f_dept_time;
+    var f_arr_time = request.body.f_arr_time;
+    var f_fare = request.body.f_fare;
+    var f_remseats = request.body.f_remseats;
+
+    // Validate the input if needed
+
+    // Construct the SQL query to insert the new flight
+    var query = `
+        INSERT INTO flights
+        (f_id, f_number, f_type, f_date, f_source, f_dest, f_dept_time, f_arr_time, f_fare, f_remseats)
+        VALUES
+        ("${f_id}","${f_number}", "${f_type}", "${f_date}", "${f_source}", "${f_dest}", "${f_dept_time}", "${f_arr_time}", "${f_fare}", "${f_remseats}")
+    `;
+
+    // Execute the query
+    database.query(query, function(error, data) {
+        if (error) {
+            throw error;
+        } else {
+            request.flash('success', 'Flight added successfully');
+            response.redirect('/project/admin_login/admin_edit_flight');
+        }
+    });
+});
+
+
 router.get('/admin_login/admin_edit_flight', function(request, response) {
     let query = 'SELECT * FROM flights';
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Flight - Admin Page</title>
+    <title>Add Flight</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-w6Pki3I2GzGX1fNfUZEFvqivxBof10j9DFOON92kFoE77p1az0F+O5lBR+QDE3dF" crossorigin="anonymous">
     <style>
@@ -17,7 +17,7 @@
             max-width: 800px;
         }
 
-        h2 {
+        h1, h2 {
             color: #007bff;
         }
 
@@ -67,50 +67,54 @@
 </head>
 <body>
     <div class="container mt-4">
-        <h2>Edit Flight</h2>
+        <h1>Add Flight</h1>
 
-        <% if (message && message.length > 0) { %>
-            <div class="alert alert-info" role="alert">
-                <%= message[0] %>
+        <!-- Display flash messages if any -->
+        <% if (message.success) { %>
+            <div class="alert alert-success" role="alert">
+                <%= message.success %>
+            </div>
+        <% } else if (message.fail) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= message.fail %>
             </div>
         <% } %>
 
-        <form action="/project/admin_login/edit_flight/<%= flight.f_id %>" method="post">
-            <label for="f_number">Flight Number:</label>
-            <input type="text" id="f_number" name="f_number" value="<%= flight.f_number %>" required>
+        <!-- Add Flight Form -->
+        <form action="/project/admin_login/add_flight" method="post">
+            <!-- Example: -->
+            <label for="f_id">Flight ID:</label>
+            <input type="text" id="f_id" name="f_id" required>
 
-            <label for="f_type">Flight Type:</label>
-            <input type="text" id="f_type" name="f_type" value="<%= flight.f_type %>" required>
+            <label for="f_number">Flight Number:</label>
+            <input type="text" id="f_number" name="f_number" required>
+
+            <label for="f_type">Type:</label>
+            <input type="text" id="f_type" name="f_type" required>
 
             <label for="f_date">Date:</label>
-            <input type="text" id="f_date" name="f_date" value="<%= flight.f_date %>" required>
+            <input type="text" id="f_date" name="f_date" required>
 
             <label for="f_source">Source:</label>
-            <input type="text" id="f_source" name="f_source" value="<%= flight.f_source %>" required>
+            <input type="text" id="f_source" name="f_source" required>
 
             <label for="f_dest">Destination:</label>
-            <input type="text" id="f_dest" name="f_dest" value="<%= flight.f_dest %>" required>
+            <input type="text" id="f_dest" name="f_dest" required>
 
             <label for="f_dept_time">Departure Time:</label>
-            <input type="text" id="f_dept_time" name="f_dept_time" value="<%= flight.f_dept_time %>" required>
+            <input type="text" id="f_dept_time" name="f_dept_time" required>
 
             <label for="f_arr_time">Arrival Time:</label>
-            <input type="text" id="f_arr_time" name="f_arr_time" value="<%= flight.f_arr_time %>" required>
+            <input type="text" id="f_arr_time" name="f_arr_time" required>
 
             <label for="f_fare">Fare:</label>
-            <input type="text" id="f_fare" name="f_fare" value="<%= flight.f_fare %>" required>
+            <input type="text" id="f_fare" name="f_fare" required>
 
             <label for="f_remseats">Remaining Seats:</label>
-            <input type="text" id="f_remseats" name="f_remseats" value="<%= flight.f_remseats %>" required>
+            <input type="text" id="f_remseats" name="f_remseats" required>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Add Flight</button>
         </form>
-        <button onclick="goBack()" class="btn btn-secondary">Go Back</button>
     </div>
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-    </script>
 </body>
 </html>
