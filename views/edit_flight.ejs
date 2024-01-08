@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-w6Pki3I2GzGX1fNfUZEFvqivxBof10j9DFOON92kFoE77p1az0F+O5lBR+QDE3dF" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+        }
+
+        h1, h2 {
+            color: #007bff;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+    </style>
+    <title>Edit Flight - Admin Page</title>
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Edit Flight</h2>
+
+        <% if (message && message.length > 0) { %>
+            <div class="alert alert-info" role="alert">
+                <%= message[0] %>
+            </div>
+        <% } %>
+
+        <form action="/project/admin_login/edit_flight/<%= flight.f_id %>" method="post">
+            <div class="mb-3">
+                <label for="f_number" class="form-label">Flight Number</label>
+                <input type="text" class="form-control" id="f_number" name="f_number" value="<%= flight.f_number %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="f_type" class="form-label">Flight Type</label>
+                <input type="text" class="form-control" id="f_type" name="f_type" value="<%= flight.f_type %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="f_date" class="form-label">Date</label>
+                <input type="text" class="form-control" id="f_date" name="f_date" value="<%= flight.f_date %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="f_source" class="form-label">Source</label>
+                <input type="text" class="form-control" id="f_source" name="f_source" value="<%= flight.f_source %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="f_dest" class="form-label">Destination</label>
+                <input type="text" class="form-control" id="f_dest" name="f_dest" value="<%= flight.f_dest %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="f_dept_time" class="form-label">Departure Time</label>
+                <input type="text" class="form-control" id="f_dept_time" name="f_dept_time" value="<%= flight.f_dept_time %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="f_arr_time" class="form-label">Arrival Time</label>
+                <input type="text" class="form-control" id="f_arr_time" name="f_arr_time" value="<%= flight.f_arr_time %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="f_fare" class="form-label">Fare</label>
+                <input type="text" class="form-control" id="f_fare" name="f_fare" value="<%= flight.f_fare %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="f_remseats" class="form-label">Remaining Seats</label>
+                <input type="text" class="form-control" id="f_remseats" name="f_remseats" value="<%= flight.f_remseats %>" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <button onclick="goBack()">Go Back</button>
+    </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    
+    </script>
+</body>
+</html>

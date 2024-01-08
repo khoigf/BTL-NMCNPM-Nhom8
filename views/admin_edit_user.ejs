@@ -63,6 +63,7 @@
                 <th>Email</th>
                 <th>Mobile</th>
                 <th>Address</th>
+                <th>Actions</th>
                 <!-- Add more columns as needed -->
             </tr>
         </thead>
@@ -74,6 +75,11 @@
                     <td><%= user.user_email %></td>
                     <td><%= user.user_mobile %></td>
                     <td><%= user.user_address %></td>
+                    <td>
+                        <form action="/project/admin_login/edit_user/<%= user.user_id %>" method="get">
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </form>
+                    </td>
                     <!-- Add more columns as needed -->
                 </tr>
             <% } %>
@@ -87,15 +93,6 @@
         <!-- Add form fields for user details -->
         <button type="submit" class="btn btn-success">Add User</button>
     </form>
-    </div>
-    
-    <!-- Edit User Form -->
-    <div class="mt-4">
-        <h2>Edit User</h2>
-        <form action="/project/admin_login/admin_edit_user/edit" method="post">
-        <!-- Add form fields for selecting and editing users -->
-            <button type="submit" class="btn btn-warning">Edit User</button>
-        </form>
     </div>
     
 

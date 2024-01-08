@@ -174,7 +174,6 @@ router.post("/admin_login", function(request, response, next){
                 {
                     if(data[count].admin_password == user_password)
                     {
-                        // response.redirect(`/project/admin_login/admin`);
                         response.redirect(`/project/admin_login/admin_page`)
                     }
                     else
@@ -227,7 +226,48 @@ router.get('/admin_login/admin_edit_flight', function(request, response) {
     });
   });
 
+  router.get('/admin_login/edit_flight/:fid', function(request, response) {
+    let fid = request.params.fid;
 
+    // Fetch the flight details based on the flight ID
+    let query = `SELECT * FROM flights WHERE f_id = "${fid}"`;
+
+    database.query(query, function(error, data) {
+        if (error) {
+            throw error;
+        } else {
+            response.render('edit_flight', { flight: data[0], message: request.flash() });
+        }
+    });
+});
+
+router.post('/admin_login/edit_flight/:fid', function(request, response) {
+    let fid = request.params.fid;
+
+    let query = `
+        UPDATE flights
+        SET
+            f_number = "${request.body.f_number}",
+            f_type = "${request.body.f_type}",
+            f_date = "${request.body.f_date}",
+            f_source = "${request.body.f_source}",
+            f_dest = "${request.body.f_dest}",
+            f_dept_time = "${request.body.f_dept_time}",
+            f_arr_time = "${request.body.f_arr_time}",
+            f_fare = "${request.body.f_fare}",
+            f_remseats = "${request.body.f_remseats}"
+        WHERE f_id = "${fid}"
+    `;
+
+    database.query(query, function(error, data) {
+        if (error) {
+            throw error;
+        } else {
+            request.flash('success', 'Flight details updated successfully');
+            response.redirect('/project/admin_login/admin_edit_flight');
+        }
+    });
+});
 
 
     router.get('/admin_login/admin_edit_user', function(request, response) {
@@ -242,7 +282,44 @@ router.get('/admin_login/admin_edit_flight', function(request, response) {
         });
     });
 
+    router.get('/admin_login/edit_user/:userid', function(request, response) {
+        let userid = request.params.userid;
+    
+        // Fetch the flight details based on the flight ID
+        let query = `SELECT * FROM users WHERE user_id = "${userid}"`;
+    
+        database.query(query, function(error, data) {
+            if (error) {
+                throw error;
+            } else {
+                response.render('edit_user', { users: data[0], message: request.flash() });
+            }
+        });
+    });
 
+    router.post('/admin_login/edit_user/:userid', function(request, response) {
+        let userid = request.params.userid;
+    
+        // Update the flight details in the database based on the form submission
+        let query = `
+            UPDATE users
+            SET
+                user_name = "${request.body.user_name}",
+                user_mobile = "${request.body.user_mobile}",
+                user_email = "${request.body.user_email}",
+                user_address = "${request.body.user_address}"
+            WHERE user_id = "${userid}"
+        `;
+    
+        database.query(query, function(error, data) {
+            if (error) {
+                throw error;
+            } else {
+                request.flash('success', 'User details updated successfully');
+                response.redirect('/project/admin_login/admin_edit_user');
+            }
+        });
+    });
 
 router.get("/login/user/:uid", function(request, response, next){
 
