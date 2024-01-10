@@ -32,6 +32,7 @@ const postLogin = (request, response, next)=>{
                     if(data[0].user_password == user_password)
                     {
                         obj.checkuser=true;
+                        obj.uId=data[0].user_id;
                         read.writeFile('./saved.json' , JSON.stringify(obj) , (err)=>{
                             console.log(err);
                         });
@@ -187,13 +188,14 @@ const postAdminLogin = (request, response, next)=>{
 }
 const postLogout = (request, response, next)=>{
     obj.checkuser=false;
+    obj.uId=0;
     read.writeFile('./saved.json' , JSON.stringify(obj) , (err)=>{
         console.log(err);
     });
     response.redirect('/');
 }
 const getUserHomepage = (request, response, next)=>{
-    if(obj.checkuser){
+    if(obj.checkuser && obj.uId == request.params.uid){
     var id = request.params.uid;
     query = `select * from users where user_id = "${id}"`;
     database.query(query, function(error,data){

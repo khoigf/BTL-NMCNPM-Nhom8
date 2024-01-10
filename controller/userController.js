@@ -8,7 +8,7 @@ read.readFile('./saved.json' , 'utf-8' , (err , data)=>{
 })
 
 const getMyTickets = (request, response, next)=>{
-    if(obj.checkuser){
+    if(obj.checkuser && obj.uId == request.params.uid){
     var uid = request.params.uid;
     var ob_id = {
         user_id :uid
@@ -37,7 +37,7 @@ const getMyTickets = (request, response, next)=>{
     }
 }
 const getCancelTicket = (request, response, next)=>{
-    if(obj.checkuser){
+    if(obj.checkuser && obj.uId == request.params.uid){
     var uid = request.params.uid;
     var bid = request.params.bid;
 
@@ -83,7 +83,7 @@ const getCancelTicket = (request, response, next)=>{
     }
 }
 const postFlight = (request, response, next)=>{
-    if(obj.checkuser){
+    if(obj.checkuser && obj.uId == request.params.uid){
     let uid = request.params.uid;
     var ob_id = {
         user_id :uid
@@ -124,7 +124,7 @@ const postFlight = (request, response, next)=>{
 }
 }
 const getBooking = (request, response, next)=>{
-    if(obj.checkuser){
+    if(obj.checkuser && obj.uId == request.params.uid){
     let uid = request.params.uid;
 
     var ob_id = {
@@ -161,7 +161,7 @@ const getBooking = (request, response, next)=>{
 }
 }
 const postBooking = (request, response, next)=>{
-    if(obj.checkuser){
+    if(obj.checkuser && obj.uId == request.params.uid){
     var f_id = request.params.fid;
     var user_id = request.params.uid;
     var f_num = request.body.f_no;
@@ -218,7 +218,7 @@ const postBooking = (request, response, next)=>{
 
 }
 const getMyProfile = (request, response, next)=>{
-    if(obj.checkuser){
+    if(obj.checkuser && obj.uId == request.params.uid){
     var uid = request.params.uid;
     var ob_id = {
         user_id : uid
@@ -245,7 +245,7 @@ const getMyProfile = (request, response, next)=>{
 }
 }
 const getUpdateProfile = (request, response, next)=>{
-    if(obj.checkuser){
+    if(obj.checkuser && obj.uId == request.params.uid){
     var uid = request.params.uid;
     var ob_id = {
         user_id : uid
@@ -272,7 +272,7 @@ const getUpdateProfile = (request, response, next)=>{
 }
 }
 const postUpdateProfile = (request, response, next)=>{
-    if(obj.checkuser){
+    if(obj.checkuser && obj.uId == request.params.uid){
     var user_id = request.params.uid;
     var user_email = request.body.userEmail;
     var user_mobile = request.body.userMobile;
@@ -302,7 +302,7 @@ const postUpdateProfile = (request, response, next)=>{
 }
 }
 const getSettings = (request, response, next)=>{
-    if(obj.checkuser){
+    if(obj.checkuser && obj.uId == request.params.uid){
     var id = request.params.uid;
 
     query = `select * from users where user_id = "${id}"`;
@@ -324,7 +324,7 @@ const getSettings = (request, response, next)=>{
 }
 }
 const postSettings = (request, response, next)=>{
-    if(obj.checkuser){
+    if(obj.checkuser && obj.uId == request.params.uid){
     var user_id = request.params.uid;
     var user_password = request.body.newPassword;
 
@@ -341,6 +341,7 @@ const postSettings = (request, response, next)=>{
         else
 		{
             obj.checkuser=false;
+            obj.uId=0;
             read.writeFile('./saved.json' , JSON.stringify(obj) , (err)=>{
                 console.log(err);
             });
@@ -354,7 +355,7 @@ const postSettings = (request, response, next)=>{
 }
 }   
 const getPayment = (request, response, next)=>{
-    if(obj.checkuser){
+    if(obj.checkuser && obj.uId == request.params.uid){
     var uid = request.params.uid;
     response.render('payment', { user_id: uid, message: request.flash() });
 }else{
@@ -363,7 +364,7 @@ const getPayment = (request, response, next)=>{
 }
 }
 const postPayment = (request, response, next)=>{
-    if(obj.checkuser){
+    if(obj.checkuser && obj.uId == request.params.uid){
     var user_id = request.params.uid;
     var account_number = request.body.account_number;
     var bank_name = request.body.bank_name; // Thêm dòng này để lấy tên hãng tài khoản ngân hàng
@@ -392,7 +393,7 @@ const postPayment = (request, response, next)=>{
 }
 }
 const getTicketInfo = (request, response, next)=>{
-    if(obj.checkuser){
+    if(obj.checkuser && obj.uId == request.params.uid){
     var uid = request.params.uid;
     var b_id = request.params.b_id;
     var ob_id = {
