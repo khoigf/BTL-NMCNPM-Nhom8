@@ -157,7 +157,7 @@ const postUpdateFlight = (request, response, next)=>{
         SET
             b_f_number = "${request.body.f_number}",
             b_f_type = "${request.body.f_type}",
-            b_f_date = "${request.body.f_date}",
+            b_f_date = "${request.body.f_date}"
         WHERE b_f_id = "${fid}"
         `;
             database.query(query1, function(error, data) {
@@ -264,7 +264,7 @@ const postTicketByUId = (request, response, next)=>{
             console.error('Error fetching bookings by user ID:', err);
             return response.status(500).send('Internal Server Error');
           }
-          response.render('admin_findbyuid', { tickets: data, message: request.flash() }); // thay ten trang 
+          response.render('admin_findbyuid', { tickets: data, message: request.flash() });
         });
     }else{
         request.flash('fail','You have to login');

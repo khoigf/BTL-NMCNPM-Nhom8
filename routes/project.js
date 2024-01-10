@@ -20,6 +20,7 @@ read.readFile('./saved.json' , 'utf-8' , (err , data)=>{
         console.log("Book ID:", obj.book_id);
         console.log("Check Admin:", obj.checkadmin);
         console.log("Check User:", obj.checkuser);
+        console.log("ID User:", obj.uId);
     } else {
         console.error("Dữ liệu JSON không được đọc đúng cách.");
     }

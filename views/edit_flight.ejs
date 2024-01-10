@@ -2,118 +2,199 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Flight - Admin Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-w6Pki3I2GzGX1fNfUZEFvqivxBof10j9DFOON92kFoE77p1az0F+O5lBR+QDE3dF" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
     <style>
         body {
-            background-color: #f8f9fa;
+            background-image: url("/image/91.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
             font-family: 'Arial', sans-serif;
-            padding: 20px;
+            color: rgb(30, 25, 25);
+        }
+
+        h1 {
+            color: white;
         }
 
         .container {
-            max-width: 800px;
+            margin-top: 50px;
         }
 
-        h2 {
-            color: #007bff;
-        }
-
-        #sidebar {
-            width: 250px;
-            background-color: #343a40;
-            color: #ffffff;
+        .card {
+            background-color: #2422226f;
             padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 750px;
+            text-align: center;
         }
 
-        form {
-            margin-top: 20px;
+        .card-header {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 15px 15px 0 0;
         }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #007bff;
+        .card-body {
+            padding: 20px;
+            color: white;
         }
 
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-            box-sizing: border-box;
+        .form-label {
+            font-weight: bold;
+            color: white;
         }
 
-        button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #ffffff;
+        .form-control {
+            font-size: 16px;
             border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            border-bottom: 2px solid white;
+            background-color: transparent;
+            color: white;
         }
 
-        button:hover {
-            background-color: #0056b3;
+        .btn-primary {
+            width: 100%;
+            font-size: 16px;
+            border: 1px solid #af0957;
+            background-color: #af0957;
+            color: white;
         }
 
-        .alert {
-            margin-top: 20px;
+        #user_id {
+            border: none;
+            border-bottom: 2px solid white;
+            background-color: transparent;
+            color: rgb(255, 255, 255);
+            outline: none;
+            /* Remove the outline when focused */
         }
     </style>
+    <title>Edit Flight</title>
 </head>
 
 <body>
-    <div class="container mt-4">
-        <h2>Edit Flight</h2>
+    <div class="container">
+        <h1 class="mb-3 mt-3 text-center">Chỉnh sửa chuyến bay</h1>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-6 mb-3 mt-3">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <% if(message.success) { %>
+                                    <div class="alert alert-success">
+                                        <%= message.success %>
+                                    </div>
+                                    <% } %>
+                                        <% if(message.fail) { %>
+                                            <div class="alert alert-danger">
+                                                <%= message.fail %>
+                                            </div>
+                                            <% } %>
+                            </div>
 
-        <% if (message && message.length> 0) { %>
-            <div class="alert alert-info" role="alert">
-                <%= message[0] %>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action="/project/admin_login/edit_flight/<%= flight.f_id %>" method="post">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="f_number" class="form-label">Số hiệu chuyến bay:</label>
+                                        <input class="form-control" type="text" id="f_number" name="f_number"
+                                            value="<%= flight.f_number %>" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="f_type" class="form-label">Loại:</label>
+                                        <input class="form-control" type="text" id="f_type" name="f_type"
+                                            value="<%= flight.f_type %>" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="f_date" class="form-label">Ngày:</label>
+                                        <input class="form-control" type="text" id="f_date" name="f_date"
+                                            value="<%= flight.f_date %>" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="f_source" class="form-label">Từ:</label>
+                                        <input class="form-control" type="text" id="f_source" name="f_source"
+                                            value="<%= flight.f_source %>" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="f_dest" class="form-label">Đến:</label>
+                                        <input class="form-control" type="text" id="f_dest" name="f_dest"
+                                            value="<%= flight.f_dest %>" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="f_dept_time" class="form-label">Thời gian đi:</label>
+                                        <input class="form-control" type="text" id="f_dept_time" name="f_dept_time"
+                                            value="<%= flight.f_dept_time %>" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="f_arr_time" class="form-label">Thời gian đến:</label>
+                                        <input class="form-control" type="text" id="f_arr_time" name="f_arr_time"
+                                            value="<%= flight.f_arr_time %>" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="f_fare" class="form-label">Giá:</label>
+                                        <input class="form-control" type="text" id="f_fare" name="f_fare"
+                                            value="<%= flight.f_fare %>" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="f_remseats" class="form-label">Chỗ còn:</label>
+                                    <input class="form-control" type="text" id="f_remseats" name="f_remseats"
+                                        value="<%= flight.f_remseats %>" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Cập nhật</button>
+                        </form>
+                        <button onclick="goBack()" class="btn btn-secondary">Quay lại</button>
+                    </div>
+                </div>
             </div>
-            <% } %>
-
-                <form action="/project/admin_login/edit_flight/<%= flight.f_id %>" method="post">
-                    <label for="f_number">Flight Number:</label>
-                    <input type="text" id="f_number" name="f_number" value="<%= flight.f_number %>" required>
-
-                    <label for="f_type">Flight Type:</label>
-                    <input type="text" id="f_type" name="f_type" value="<%= flight.f_type %>" required>
-
-                    <label for="f_date">Date:</label>
-                    <input type="text" id="f_date" name="f_date" value="<%= flight.f_date %>" required>
-
-                    <label for="f_source">Source:</label>
-                    <input type="text" id="f_source" name="f_source" value="<%= flight.f_source %>" required>
-
-                    <label for="f_dest">Destination:</label>
-                    <input type="text" id="f_dest" name="f_dest" value="<%= flight.f_dest %>" required>
-
-                    <label for="f_dept_time">Departure Time:</label>
-                    <input type="text" id="f_dept_time" name="f_dept_time" value="<%= flight.f_dept_time %>" required>
-
-                    <label for="f_arr_time">Arrival Time:</label>
-                    <input type="text" id="f_arr_time" name="f_arr_time" value="<%= flight.f_arr_time %>" required>
-
-                    <label for="f_fare">Fare:</label>
-                    <input type="text" id="f_fare" name="f_fare" value="<%= flight.f_fare %>" required>
-
-                    <label for="f_remseats">Remaining Seats:</label>
-                    <input type="text" id="f_remseats" name="f_remseats" value="<%= flight.f_remseats %>" required>
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-                <button onclick="goBack()" class="btn btn-secondary">Go Back</button>
+            <div class="col-sm-3"></div>
+        </div>
     </div>
     <script>
         function goBack() {
             window.history.back();
         }
+
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

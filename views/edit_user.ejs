@@ -2,112 +2,140 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-w6Pki3I2GzGX1fNfUZEFvqivxBof10j9DFOON92kFoE77p1az0F+O5lBR+QDE3dF" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Edit User</title>
     <style>
         body {
-            background-color: #f8f9fa;
+            background-image: url("/image/91.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
             font-family: 'Arial', sans-serif;
-            padding: 20px;
+            color: rgb(30, 25, 25);
         }
 
         .container {
-            max-width: 800px;
+            margin-top: 50px;
         }
 
-        h2 {
-            color: #007bff;
+        h1 {
+            color: white;
         }
 
-        #sidebar {
-            width: 250px;
-            background-color: #343a40;
-            color: #ffffff;
+        .card {
+            background-color: #2422226f;
             padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 550px;
+            text-align: center;
         }
 
-        form {
-            margin-top: 20px;
+        .card-header {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 15px 15px 0 0;
         }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #007bff;
+        .card-body {
+            padding: 20px;
+            color: white;
         }
 
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-            box-sizing: border-box;
+        .form-label {
+            font-weight: bold;
+            color: white;
         }
 
-        button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #ffffff;
+        .form-control {
+            font-size: 16px;
             border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            border-bottom: 2px solid white;
+            background-color: transparent;
+            color: white;
         }
 
-        button:hover {
-            background-color: #0056b3;
+        .btn-primary {
+            width: 100%;
+            font-size: 16px;
+            border: 1px solid #af0957;
+            background-color: #af0957;
+            color: white;
         }
 
-        .alert {
-            margin-top: 20px;
+        #user_id {
+            border: none;
+            border-bottom: 2px solid white;
+            background-color: transparent;
+            color: rgb(255, 255, 255);
+            outline: none;
+            /* Remove the outline when focused */
         }
     </style>
-    <title>Edit User - Admin Page</title>
 </head>
 
 <body>
-    <div class="container mt-4">
-        <h2>Edit User</h2>
+    <div class="container">
+        <h1 class="mb-3 mt-3 text-center">Chỉnh sửa thông tin khách hàng</h1>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6 mb-3 mt-3">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <% if(message.success) { %>
+                                    <div class="alert alert-success">
+                                        <%= message.success %>
+                                    </div>
+                                    <% } %>
+                                        <% if(message.fail) { %>
+                                            <div class="alert alert-danger">
+                                                <%= message.fail %>
+                                            </div>
+                                            <% } %>
+                            </div>
 
-        <% if (message && message.length> 0) { %>
-            <div class="alert alert-info" role="alert">
-                <%= message[0] %>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action="/project/admin_login/edit_user/<%= users.user_id %>" method="post">
+                            <div class="mb-3">
+                                <label for="user_name" class="form-label">Tên đăng nhập</label>
+                                <input type="text" class="form-control" id="user_name" name="user_name"
+                                    value="<%= users.user_name %>" style="color: black;" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="user_mobile" class="form-label">Số điện thoại</label>
+                                <input type="text" class="form-control" id="user_mobile" name="user_mobile"
+                                    value="<%= users.user_mobile %>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="user_email" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="user_email" name="user_email"
+                                    value="<%= users.user_email %>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="user_address" class="form-label">Địa chỉ</label>
+                                <input type="text" class="form-control" id="user_address" name="user_address"
+                                    value="<%= users.user_address %>" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Cập nhật</button>
+                        </form>
+                        <button onclick="window.location.href='/project/admin_login/admin'"
+                            class="btn btn-secondary">Quay lại</button>
+                    </div>
+                </div>
             </div>
-            <% } %>
-
-                <form action="/project/admin_login/edit_user/<%= users.user_id %>" method="post">
-                    <div class="mb-3">
-                        <label for="user_name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="user_name" name="user_name"
-                            value="<%= users.user_name %>" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="user_mobile" class="form-label">Mobile</label>
-                        <input type="text" class="form-control" id="user_mobile" name="user_mobile"
-                            value="<%= users.user_mobile %>" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="user_email" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="user_email" name="user_email"
-                            value="<%= users.user_email %>" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="user_address" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="user_address" name="user_address"
-                            value="<%= users.user_address %>" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-                <button onclick="goBack()">Go Back</button>
+            <div class="col-sm-3"></div>
+        </div>
     </div>
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-
-    </script>
 </body>
 
 </html>
