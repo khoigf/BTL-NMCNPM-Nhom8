@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-w6Pki3I2GzGX1fNfUZEFvqivxBof10j9DFOON92kFoE77p1az0F+O5lBR+QDE3dF" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/styleUser.css' />
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            padding: 0;
+        }
+
+        h1 {
+            color: rgb(0, 0, 0);
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        #sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            background-color: white;
+            margin-top: 20px;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .btn-login {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+
+        .btn-login:hover {
+            background-color: #0069d9;
+            color: #ffffff;
+        }
+    </style>
+    <title>Flight Editor - Admin Page</title>
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h1>Danh sách vé</h1>
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ID người dùng</th>
+                    <th>Số hiệu chuyến bay</th>
+                    <th>Loại</th>
+                    <th>Ngày</th>
+                    <th>Tên</th>
+                    <th>Tuổi</th>
+                    <th>Giới tính</th>
+                    <th></th>
+                    <!-- Add more columns as needed -->
+                </tr>
+            </thead>
+            <tbody>
+                <% for (let ticket of tickets) { %>
+                    <tr>
+                        <td>
+                            <%= ticket.b_id %>
+                        </td>
+                        <td>
+                            <%= ticket.b_user_id %>
+                        </td>
+                        <td>
+                            <%= ticket.b_f_number %>
+                        </td>
+                        <td>
+                            <%= ticket.b_f_type %>
+                        </td>
+                        <td>
+                            <%= ticket.b_f_date %>
+                        </td>
+                        <td>
+                            <%= ticket.b_pas_name %>
+                        </td>
+                        <td>
+                            <%= ticket.b_pas_age %>
+                        </td>
+                        <td>
+                            <%= ticket.b_pas_gender %>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary"
+                                onclick="window.location.href='/project/admin_login/admin'">Cập nhật
+                            </button>
+                            <button class="btn btn-danger"
+                                onclick="window.location.href='/project/admin_login/admin'">Xóa vé
+                            </button>
+                        </td>
+                        <!-- Add more columns as needed -->
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
+        <button onclick="goBack()">Go Back</button>
+    </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+    </script>
+</body>
+
+</html>

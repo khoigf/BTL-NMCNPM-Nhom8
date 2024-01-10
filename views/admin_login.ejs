@@ -10,11 +10,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Login System for Admin</title>
+    <title>Admin Login</title>
     <style>
         body {
-            background-image: url("../image/Flight.jpg");
-            /* Adjust the path based on your project structure */
+            background-image: url("../image/banner1.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -26,15 +25,15 @@
         }
 
         .card {
-            border: 2px solid #007bff;
-            border-radius: 15px;
+            background-color: #ffffff2c;
+            padding: 20px;
+            border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
+            width: 550px;
+            text-align: center;
         }
 
         .card-header {
-            background-color: #007bff;
-            color: white;
             font-size: 20px;
             font-weight: bold;
             text-align: center;
@@ -44,31 +43,50 @@
 
         .card-body {
             padding: 20px;
+            color: white;
         }
 
         .form-label {
             font-size: 16px;
+            font-weight: bold;
+            color: white;
         }
 
         .form-control {
             font-size: 16px;
+            border: none;
+            border-bottom: 2px solid white;
+            background-color: transparent;
+            color: white;
+            outline: none;
         }
 
         .btn-primary {
             width: 100%;
             font-size: 16px;
+            border: 1px solid #af0957;
+            background-color: #af0957;
+            color: white;
         }
 
         .btn-user-login {
             width: 100%;
             font-size: 16px;
+            border: 1px solid #af0957;
+            background-color: #af0957;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1 class="mt-5 mb-5 text-center text-primary"><b>Admin Login</b></h1>
+        <h1 class="mt-5 mb-5 text-center text-primary"><b>Đăng nhập Admin</b></h1>
         <div class="row">
             <div class="col-sm-3"></div>
             <div class="col-sm-6 mb-3 mt-3">
@@ -79,7 +97,6 @@
                                 <%= message.success %>
                             </div>
                             <% } %>
-
                                 <% if(message.fail) { %>
                                     <div class="alert alert-danger">
                                         <%= message.fail %>
@@ -89,23 +106,21 @@
                     <div class="card-body">
                         <form method="post" action="/project/admin_login">
                             <div class="mb-3">
-                                <label for="user_name" class="form-label">Username</label>
+                                <label for="user_name" class="form-label">Tên đăng nhập</label>
                                 <input type="text" id="user_name" name="user_name" class="form-control" />
                             </div>
                             <div class="mb-3">
-                                <label for="user_password" class="form-label">Password</label>
+                                <label for="user_password" class="form-label">Mật khẩu</label>
                                 <input type="password" id="user_password" name="user_password" class="form-control" />
                             </div>
-
                             <div class="mb-3">
-                                <input type="submit" class="btn btn-primary" value="Admin Login" />
+                                <input type="submit" class="btn btn-primary" value="Đăng nhập" />
                             </div>
                             <div class="mb-4">
-                                <a href="/project" class="btn btn-primary btn-user-login">Login as User</a>
+                                <a href="/project" class="btn btn-primary btn-user-login">Đăng nhập với người dùng</a>
                             </div>
                         </form>
-                        <button onclick="window.location.href='/'" class="btn btn-secondary">Back to
-                            Homepage</button>
+                        <button onclick="window.location.href='/'" class="btn btn-secondary">Quay về trang chủ</button>
                     </div>
                 </div>
             </div>

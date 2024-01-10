@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Flight - Admin Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-w6Pki3I2GzGX1fNfUZEFvqivxBof10j9DFOON92kFoE77p1az0F+O5lBR+QDE3dF" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        #sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 20px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #007bff;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .alert {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h2>Edit Flight</h2>
+
+        <% if (message && message.length> 0) { %>
+            <div class="alert alert-info" role="alert">
+                <%= message[0] %>
+            </div>
+            <% } %>
+
+                <form action="/project/admin_login/edit_flight/<%= flight.f_id %>" method="post">
+                    <label for="f_number">Flight Number:</label>
+                    <input type="text" id="f_number" name="f_number" value="<%= flight.f_number %>" required>
+
+                    <label for="f_type">Flight Type:</label>
+                    <input type="text" id="f_type" name="f_type" value="<%= flight.f_type %>" required>
+
+                    <label for="f_date">Date:</label>
+                    <input type="text" id="f_date" name="f_date" value="<%= flight.f_date %>" required>
+
+                    <label for="f_source">Source:</label>
+                    <input type="text" id="f_source" name="f_source" value="<%= flight.f_source %>" required>
+
+                    <label for="f_dest">Destination:</label>
+                    <input type="text" id="f_dest" name="f_dest" value="<%= flight.f_dest %>" required>
+
+                    <label for="f_dept_time">Departure Time:</label>
+                    <input type="text" id="f_dept_time" name="f_dept_time" value="<%= flight.f_dept_time %>" required>
+
+                    <label for="f_arr_time">Arrival Time:</label>
+                    <input type="text" id="f_arr_time" name="f_arr_time" value="<%= flight.f_arr_time %>" required>
+
+                    <label for="f_fare">Fare:</label>
+                    <input type="text" id="f_fare" name="f_fare" value="<%= flight.f_fare %>" required>
+
+                    <label for="f_remseats">Remaining Seats:</label>
+                    <input type="text" id="f_remseats" name="f_remseats" value="<%= flight.f_remseats %>" required>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <button onclick="goBack()" class="btn btn-secondary">Go Back</button>
+    </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+
+</html>

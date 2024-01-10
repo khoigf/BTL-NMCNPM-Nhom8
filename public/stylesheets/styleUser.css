@@ -1,0 +1,102 @@
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.navbar {
+    background-color: #343a40;
+}
+
+.navbar-brand {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    color: #ffffff;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #17a2b8;
+}
+
+.btn-login {
+    background-color: #17a2b8;
+    color: #ffffff;
+}
+
+.btn-login:hover {
+    background-color: #117a8b;
+}
+
+.jumbotron {
+    background: url("/image/banner2.jpg");
+    background-size: cover;
+    color: #ffffff;
+    text-align: center;
+    padding: 200px 0;
+    margin-bottom: 0;
+}
+
+.jumbotron h1 {
+    font-size: 3.5em;
+    font-weight: bold;
+}
+
+.jumbotron p {
+    font-size: 1.5em;
+}
+
+#contact {
+    background-color: #26609d;
+    /* Màu nền mới cho phần Contact */
+    color: #ffffff;
+}
+.container {
+    max-width: 100%;
+}
+#searchFlight {
+    background-color: #04654e;
+    color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    /* Góc bo tròn cho phần search */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    /* Đổ bóng */
+}
+
+#searchFlight .card {
+    border: none;
+    background-color: transparent;
+}
+
+#searchFlight label {
+    color: #ffffff;
+}
+
+#searchFlight input::placeholder {
+    color: #ced4da;
+}
+
+#searchFlight input {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+
+#searchFlight input:focus {
+    border-color: #117a8b;
+    box-shadow: 0 0 0 0.2rem rgba(23, 122, 136, 0.25);
+}
+
+#searchFlight .btn-primary {
+    background-color: #117a8b;
+    border: 1px solid #117a8b;
+}
+
+#searchFlight .btn-primary:hover {
+    background-color: #0d5f6d;
+    border: 1px solid #0d5f6d;
+}
+
+#sidebar {
+    background-color: #2a2c2f;
+}

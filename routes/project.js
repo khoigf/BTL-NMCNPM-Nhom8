@@ -1,493 +1,106 @@
 var express = require('express');
 var read = require('fs');
-var router = express.Router();
-var database = require('../database');
-const { count } = require('console');
 let obj;
+var router = express.Router();
+const {getLogin,postLogin,getResigter,postResigter,getAdminLogin,postAdminLogin, postLogout, getUserHomepage, postAdminLogout, getAdminHome} = require('../controller/homeController');
+const { count } = require('console');
+const { getMyTickets, getMyProfile, getUpdateProfile, postUpdateProfile, getCancelTicket, postFlight, getBooking,
+         postBooking,
+         getSettings,
+         postSettings,
+         getPayment,
+         postPayment,
+         getTicketInfo} = require('../controller/userController');
+const { getEditFlight, getEditUser, getEditTicket, getUpdateFlight, postUpdateFlight, getAddFlight, postAddFlight, getUpdateUser, postUpdateUser, postDeleteFilght, postTicketByUId, postDeleteTicket, getAddUser, postAddUser, getUpdateTicket, postUpdateTicket, } = require('../controller/adminController');
 read.readFile('./saved.json' , 'utf-8' , (err , data)=>{
    // console.log(data);
     //console.log(typeof(data));
     obj = JSON.parse(data);
-    //console.log(obj);
+    if (obj) {
+        console.log("Book ID:", obj.book_id);
+        console.log("Check Admin:", obj.checkadmin);
+        console.log("Check User:", obj.checkuser);
+    } else {
+        console.error("Dữ liệu JSON không được đọc đúng cách.");
+    }
 })
 
+router.get("/", getLogin);
 
-router.get("/", function(request, response, next){
-
-    response.render('project', {message : request.flash()});       
-  
-});
-
-router.post("/login", function(request, response, next){
-
-    var user_name = request.body.user_name
-
-    var user_password = request.body.user_password;
-
-    if(user_name && user_password)
-    {
-        query = `
-        SELECT * FROM users
-        WHERE user_name = "${user_name}"
-        `;
-
-        database.query(query, function(error, data){
-
-            if(data.length > 0)
-            {
-                    if(data[0].user_password == user_password)
-                    {
-                        response.redirect(`/project/login/user/${data[0].user_id}`);
-                    }
-                    else
-                    {
-                        request.flash('fail','Incorrect Password')
-                        response.redirect("/project");
-                    }
-
-            }
-            else
-            {
-                request.flash('fail','Incorrect Email Address');
-                response.redirect("/project")
-            }
-            response.end();
-        });
-    }
-    else
-    {
-        request.flash('fail','Please Enter Email Address and Password Details');
-        response.redirect('/project');
-    }
+router.post("/login", postLogin);
 
-});
-
-
-router.get("/register", function(request, response, next){
-
-    var query = `select * from users`;
-
-    database.query(query, function(error, data){
-
-        if(error)
-		{
-			throw error;
-		}	
-		else
-		{
-			response.render('register', {message : request.flash(),sampleData:data});
-        }
-
-    });
-
-});
-
-router.post("/register", function(request, response, next){
-
-    var id = request.body.user_id;
-    var name = request.body.user_name;
-    var pass = request.body.pass;
-    var mobile = request.body.mobile;
-    var email = request.body.email;
-    var addr = request.body.addr; 
-
-    var query1 = `select * from users`;
-
-    database.query(query1, function(error, data){
-
-        if(error)
-		{
-			throw error;
-		}	
-		else
-		{
-            var flag = true;
-            for(ctr = 0; ctr < data.length;ctr++)
-            {
-                if(data[ctr].user_name == name )
-                {
-                    flag = false;
-                    break;
-                    
-                }
-            }
-
-            if(flag == false)
-            {
-                request.flash('fail','Username already taken');
-                response.redirect('/project/register');
-            }
-
-            else
-            {
-                var query2 = ` insert into users 
-                values("${id}", "${name}", "${pass}", "${mobile}", "${email}", "${addr}")`;
-
-                database.query(query2, function(error,data){
-                    if(error)
-                    {
-                        throw error;
-                    }
-                    else
-                    {
-                        request.flash('success','New User Created Successfully');
-                        response.redirect('/project');
-                    }
-                });
-
-            }
-        }
-    });
-
-    
-
-});
-
-
-router.get("/admin_cred", function(request, response, next){
-
-    response.render('admin_login', {message : request.flash()});       
-
-      
-});
-
-
-router.post("/admin_login", function(request, response, next){
-
-    var user_name = request.body.user_name
-
-    var user_password = request.body.user_password;
-
-    if(user_name && user_password)
-    {
-        query = `
-        SELECT * FROM admins
-        WHERE admin_username = "${user_name}"
-        `;
-
-        database.query(query, function(error, data){
-
-            if(data.length > 0)
-            {
-                for(var count = 0; count < data.length; count++)
-                {
-                    if(data[count].admin_password == user_password)
-                    {
-                        response.redirect(`/project/admin_login/admin`);
-                    }
-                    else
-                    {
-                        request.flash('fail','Incorrect Password')
-                        response.redirect("/project/admin_cred");
-                    }
-                }
-            }
-            else
-            {
-                request.flash('fail','Incorrect Username');
-                response.redirect("/project/admin_cred")
-            }
-            response.end();
-        });
-    }
-    else
-    {
-        request.flash('fail','Please Enter Email Address and Password Details');
-        response.redirect('/project/admin_cred');
-    }
-
-});
-
-
-router.get("/admin_login/admin", function(request, response, next){
-
-    query = `select * from admins`
-
-    database.query(query, function(error,data){
-        if(error)
-        {
-            throw error;
-        }
-        else
-        {
-            response.render('admin',{sampleData:data[0], message : request.flash()});
-        }
-    })
-
-});
-
-router.post("/admin_login/admin", function(request, response, next){
-
-    var num = request.body.num;
-    var dept = request.body.dept;
-    var arr = request.body.arr;
-    var fare = request.body.fare;
-
-  
-
-    query2 = `update flights
-             set 
-             f_dept_time = "${dept}",
-             f_arr_time = "${arr}",
-             f_fare = "${fare}"
-             where f_number = "${num}"`;
-
-    database.query(query2, function(error){
-        if(error)
-        {
-            throw error;
-        }
-
-        else
-        {
-            query1 = `select * from flights where f_number = "${num}"`;
-
-            database.query(query1, function(error,data){
-                if(error)
-                {
-                    throw error;
-                }
-        
-                if(data.length == 0)
-                {   
-                    request.flash('fail','No flight with given flight number');
-                    response.redirect('/project/admin_login/admin');
-                }
-
-                else
-                {
-                    request.flash('success','Flight details updated successfully');
-                    response.redirect('/project/admin_login/admin');
-                }
-            });
-        }
-
-            
-
-    });
-
-});
-
-
-router.get("/login/user/:uid", function(request, response, next){
-
-    var id = request.params.uid;
-
-    query = `select * from users where user_id = "${id}"`;
-    
-    database.query(query, function(error,data){
-
-        if(error)
-        {
-            throw error;
-        }
-        else
-        {
-            response.render('user',{sampleData:data, message : request.flash()});
-        }
-    })
-
-});
-
-router.get("/login/user/:uid/my_tickets", function(request, response, next){
-
-    var uid = request.params.uid;
-    var ob_id = {
-        user_id :uid
-    } ;
-
-    query = `select * from bookings where b_user_id = "${uid}"`;
-    
-    database.query(query, function(error,data){
-
-        if(error)
-        {
-            throw error;
-        }
-        else
-        {
-            data.push(ob_id);
-            response.render('my_tickets',{sampleData:data, message : request.flash()});
-        }
-    });
-
-});
-
-router.get("/login/user/:uid/my_tickets/cancel/:bid", function(request, response, next){
-
-    var uid = request.params.uid;
-    var bid = request.params.bid;
-
-    query1 = `select * from bookings where b_id = "${bid}"`;
-
-    database.query(query1 , function(error,data){
-        if(error)
-        {
-            throw error;
-        }
-
-        else
-        {
-            query3 = `update flights
-                      set f_remseats = f_remseats+1
-                      where f_id = "${data[0].b_f_id}"`;
-            
-            database.query(query3, function(error,data){
-                if(error)
-                {
-                    throw error;
-                }
-            });
-        }
-    });
-
-    query2 = `delete from bookings where b_id = "${bid}"`;
-    
-    database.query(query2, function(error,data){
-
-        if(error)
-        {
-            throw error;
-        }
-        else
-        {
-            request.flash('info','Your ticket has been cancelled')
-            response.redirect(`/project/login/user/${uid}/my_tickets`);
-        }
-    });
-
-});
-
-
-router.post("/login/user/:uid/form_submit", function(request, response, next){
-
-    let uid = request.params.uid;
-    var ob_id = {
-        user_id :uid
-    } ;
-    var data1;
-	var source = request.body.from;
-
-	var dest = request.body.to;
-    
-    var date = request.body.date;
-
-	var query = `
-	select * from flights
-	where 
-    f_source = "${source}"
-    and
-    f_dest = "${dest}"
-    and
-    f_date = "${date}"
-	`;
-
-
-	database.query(query, function(error, data){
-
-		if(error)
-		{
-			throw error;
-		}	
-
-        else{
-            data.push(ob_id);
-            response.render('user_results',{sampleData:data, message: request.flash()});
-        }
-	});
-
-});
-
-
-router.get("/login/user/:uid/form_submit/booking/:fid", function(request, response, next){
-
-    let uid = request.params.uid;
-
-    var ob_id = {
-        user_id : uid
-    };
-
-	var fid = request.params.fid;
-
-    query = `select * from flights where f_id = "${fid}"`;
-
-    database.query(query, function(error,data){
-        
-        if(error)
-        {
-            throw error;
-        }
-        else
-        {
-            if(data[0].f_remseats == 0)
-            {
-                request.flash('fail','No tickets avaialable in this flight');
-                response.redirect(`/project/login/user/${uid}`);
-            }
-            else
-            {
-                data.push(ob_id);
-                response.render('booking',{sampleData:data, message : request.flash()});
-            }
-        }
-    });
-
-});
-
-router.post("/login/user/:uid/form_submit/booking/:fid", function(request, response, next){
-
-    var f_id = request.params.fid;
-    var user_id = request.params.uid;
-    var f_num = request.body.f_no;
-    var f_type = request.body.type;
-	var f_date = request.body.date;
-    
-	var pas_name = request.body.name;
-
-    obj.book_id = obj.book_id +1;
-
-    read.writeFile('./saved.json' , JSON.stringify(obj) , (err)=>{
-        console.log(err);
-    });
-
-	var pas_age = request.body.age;
-
-	var pas_gender = request.body.gender;
-
-    var query1 = `update flights
-                  set f_remseats = f_remseats - 1 
-                  where f_id = "${f_id}" `;
-
-    database.query(query1, function(error,data){
-        if(error)
-        {
-            throw error;
-        }
-
-    })
-
-
-	var query2 = `
-	INSERT INTO bookings
-	VALUES ("${obj.book_id}", "${user_id}", "${f_id}", "${f_num}", "${f_type}", "${f_date}", "${pas_name}", "${pas_age}", "${pas_gender}")
-	`;
-
-	database.query(query2, function(error, data){
-
-		if(error)
-		{
-			throw error;
-		}	
-		else
-		{
-            request.flash('success','Ticket booked successfully')
-            response.redirect(`/project/login/user/${user_id}`)
-		}
-
-	});
-
-
-});
+router.get("/register", getResigter);
 
+router.post("/register", postResigter);
+
+router.get("/admin_cred", getAdminLogin);
+
+router.post("/admin_login", postAdminLogin);
+
+router.get("/admin_login/admin", getAdminHome);
+
+router.get('/admin_login/admin_edit_flight', getEditFlight);
+
+router.get('/admin_login/admin_edit_user',getEditUser);
+
+router.get('/admin_login/admin_edit_ticket',getEditTicket);
+
+router.get('/admin_login/add_flight',getAddFlight);
+
+router.post('/admin_login/add_flight',postAddFlight);
+
+router.get('/admin_login/edit_flight/:fid',getUpdateFlight);
+
+router.post('/admin_login/edit_flight/:fid',postUpdateFlight);
+
+router.get('/admin_login/add_user',getAddUser);
+
+router.post('/admin_login/add_user',postAddUser);
+
+router.get('/admin_login/edit_user/:userid',getUpdateUser);
+
+router.post('/admin_login/edit_user/:userid',postUpdateUser);
+
+router.get('/admin_login/edit_ticket/:bid',getUpdateTicket);
+
+router.post('/admin_login/edit_ticket/:bid',postUpdateTicket);
+
+router.post("/admin_login/deleteflight/:fid",postDeleteFilght);
+
+router.post("/admin_login/findticket",postTicketByUId);
+
+router.post("/admin_login/deleteticket/:bid",postDeleteTicket);
+
+router.get("/login/user/:uid", getUserHomepage);
+
+router.get("/login/user/:uid/my_tickets", getMyTickets);
+
+router.get("/login/user/:uid/my_tickets/cancel/:bid", getCancelTicket);
+
+router.get("/login/user/:uid/my_profile",getMyProfile);
+
+router.get("/login/user/:uid/update_profile",getUpdateProfile)
+
+router.post("/login/user/:uid/update_profile",postUpdateProfile)
+
+router.post("/login/user/:uid/form_submit", postFlight);
+
+router.get("/login/user/:uid/form_submit/booking/:fid", getBooking);
+
+router.post("/login/user/:uid/form_submit/booking/:fid", postBooking);
+
+router.get("/login/user/:uid/setting",getSettings);
+
+router.post("/login/user/:uid/setting",postSettings);
+
+router.get("/login/user/:uid/payment",getPayment);
+
+router.post("/login/user/:uid/payment",postPayment);
+
+router.get("/login/user/:uid/:b_id/ticketInfo",getTicketInfo);
+
+router.post("/logout",postLogout);
+
+router.post("/admin/logout",postAdminLogout);
 
 module.exports = router;

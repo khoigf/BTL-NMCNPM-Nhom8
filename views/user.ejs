@@ -1,94 +1,210 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Homepage</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <title>User HomePage</title>
+    <link rel='stylesheet' href='/stylesheets/styleUser.css' />
 </head>
 
 <body>
-    <div class="container">
-        <h1 class="text-center mt-3 mb-3">Search Flights</h1>
-        <h3 class="text-sm-end"> Welcome Mr. <%= sampleData[0].user_name %>
-                </h2>
 
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>">
+                <img src="/image/logo1.png" alt="Hust Airline Logo" width="40" height="40"
+                    class="d-inline-block align-text-center"> HUST Airline</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">Giới thiệu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Liên Hệ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/my_profile">
+                            <img src="/image/profile.jpg" alt="Logo" width="30" height="30"
+                                class="d-inline-block align-text-center rounded-circle" style="border-radius: 50%;">
+                            <%= sampleData[0].user_name %>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form method="POST" action="/project/logout">
+                            <button class="btn btn-login" type="submit" style="background-color: #17a2b8; /* Green color */
+                            color: white; /* Text color */">Đăng xuất</button>
+                        </form>
 
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-                            <div class="col">
-                                <a href="/project/login/user/<%= sampleData[0].user_id %>/my_tickets"
-                                    class="btn btn-success  float-start">My Bookings</a>
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Sidebar -->
+            <nav id="sidebar" class="col-md-3 col-lg-2 sidebar">
+                <div class="position-sticky">
+                    <p></p>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-center d-flex align-items-center justify-content-center h4"
+                                href="#searchFlight" type="">
+                                Đặt vé
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-center d-flex align-items-center justify-content-center h4"
+                                href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/my_tickets"
+                                type="">
+                                Vé của tôi
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-center d-flex align-items-center justify-content-center h4"
+                                href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/my_profile"
+                                type="">
+                                Hồ sơ của tôi
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-center d-flex align-items-center justify-content-center h4"
+                                href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/setting"
+                                type="">
+                                Cài đặt
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-0">
+                <div class="jumbotron">
+                    <h3 class="text-center mb-3"> Xin chào Ông/Bà <%= sampleData[0].user_name %>
+                    </h3>
+                    <h1 class="display-3">Chào mừng đến với Hust Airline</h1>
+                    <p class="lead">Khám phá những ưu đãi và giảm giá lớn trên các chuyến bay. Hãy đặt vé ngay hôm nay!
+                    </p>
+                    <a class="btn btn-primary btn-lg" href="#searchFlight" role="button">Tìm chuyến bay</a>
+                </div>
+                <section id="searchFlight">
+                    <div class="container mt-3">
+                        <h1 class="display-4 text-center">Tìm Chuyến Bay</h1>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <% if(message.success) { %>
+                                    <div class="alert alert-success">
+                                        <%= message.success %>
+                                    </div>
+                                    <% } %>
+
+                                        <% if(message.fail) { %>
+                                            <div class="alert alert-danger">
+                                                <%= message.fail %>
+                                            </div>
+                                            <% } %>
                             </div>
 
-                            <div class="col">
-                                <a href="/project" class="btn btn-danger  float-end">Logout</a>
+                            <div class="card-body">
+                                <form method="POST"
+                                    action="/project/login/user/<%= sampleData[0].user_id %>/form_submit">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label>From</label>
+                                                <input type="text" name="from" id="from" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label>To</label>
+                                                <input type="text" name="to" id="to" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label>Date</label>
+                                                <input type="date" name="date" id="date" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                        <div class="mb-3">
+                                            <input type="submit" name="submit_button" class="btn btn-primary"
+                                                value="Search">
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
+                </section>
 
-                    <div class="card-header">
-                        <% if(message.success) { %>
-                            <div class="alert alert-success">
-                                <%= message.success %>
+                <section id="about" class="bg-light py-5">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6 mx-auto text-center">
+                                <h2 class="display-4">Giới thiệu chung</h2>
+                                <p class="lead">Hust Airline</p>
+                                <p class="lead">Trụ sở : Hà Nội</p>
+                                <p class="lead">Các chuyến bay phổ biến : </p>
+                                <p class="lead">Thông tin nổi bật : </p>
+                                <p class="lead">Khám phá các điểm đến : </p>
+                                <p class="lead"> ... </p>
                             </div>
-                            <% } %>
-
-                                <% if(message.fail) { %>
-                                    <div class="alert alert-danger">
-                                        <%= message.fail %>
-                                    </div>
-                                    <% } %>
+                        </div>
                     </div>
+                </section>
 
-                    <div class="card-body">
-                        <form method="POST" action="/project/login/user/<%= sampleData[0].user_id %>/form_submit">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label>From</label>
-                                        <input type="text" name="from" id="from" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label>To</label>
-                                        <input type="text" name="to" id="to" class="form-control" />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label>Date</label>
-                                        <input type="date" name="date" id="date" class="form-control" />
-                                    </div>
-                                </div>
-
-
-                                <div class="col-md-2"></div>
-                                <div class="mb-3">
-                                    <input type="submit" name="submit_button" class="btn btn-primary" Value="Search">
-                                </div>
+                <section id="contact" class="py-5">
+                    <div class="container" id="contact">
+                        <div class="row">
+                            <div class="col-lg-6 mx-auto text-center">
+                                <h2 class="display-4">Thông tin liên hệ</h2>
+                                <p class="lead">Nếu bạn có vấn đề gì với chuyến bay của chúng tôi và cần hỗ trợ hay cần
+                                    tư vấn về
+                                    các chuyến
+                                    bay thì hãy liên hệ với chúng tôi theo sỗ điện thoại hoặc email dưới đây.</p>
+                                <p>Email: info@hustairline.com</p>
+                                <p>Phone: +123 456 789</p>
+                                <p>Hotline: 0190 0xxx</p>
                             </div>
-
+                        </div>
                     </div>
+                </section>
+            </main>
 
-                    </form>
-                </div>
-    </div>
-
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+
+    <script>
+        // Add smooth scrolling to all links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

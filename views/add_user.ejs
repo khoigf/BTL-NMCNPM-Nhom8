@@ -10,16 +10,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>User Registration</title>
+    <title>Add User</title>
     <style>
         body {
-            background-image: url("../image/banner1.jpg");
+            background-image: url("/image/banner1.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-position: center;
             font-family: 'Arial', sans-serif;
-            color: white;
+            color: rgb(30, 25, 25);
         }
 
         .container {
@@ -81,7 +81,7 @@
 
 <body>
     <div class="container">
-        <h1 class="mb-3 mt-3 text-center text-primary">Đăng ký</h1>
+        <h1 class="mb-3 mt-3 text-center text-primary">Thêm người dùng</h1>
         <div class="row">
             <div class="col-sm-3"></div>
             <div class="col-sm-6 mb-3 mt-3">
@@ -104,11 +104,11 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="/project/register">
+                        <form method="POST" action="/project/admin_login/add_user">
                             <div class="mb-3">
                                 <label for="user_id" class="form-label">ID người dùng</label>
                                 <input type="text" name="user_id" id="user_id" class="form-control"
-                                    value="<%= sampleData && sampleData.length ? sampleData[sampleData.length - 1].user_id + 1 : '' %>"
+                                    value="<%= users && users.length ? users[users.length - 1].user_id + 1 : '' %>"
                                     readonly />
                             </div>
 
@@ -138,11 +138,12 @@
                             </div>
 
                             <div class="mb-3">
-                                <input type="submit" name="submit_button" class="btn btn-primary" value="Đăng ký" />
+                                <input type="submit" name="submit_button" class="btn btn-primary"
+                                    value="Thêm người dùng" />
                             </div>
                         </form>
-                        <button onclick="window.location.href='/project'" class="btn btn-secondary">Quay về trang đăng
-                            nhập</button>
+                        <button onclick="window.location.href='/project/admin_login/admin'"
+                            class="btn btn-secondary">Quay về</button>
                     </div>
                 </div>
             </div>

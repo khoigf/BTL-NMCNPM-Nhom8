@@ -1,100 +1,200 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title></title>
-    </head>
-    <body>
-        
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/styleUser.css' />
+    <style>
+        .jumbotron {
+            background: url("/image/ai.png");
+            padding: 156px 0;
+            margin-bottom: 0;
+        }
+    </style>
+
+    <title>Available Flights</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <h1 class="text-center mt-3 mb-3">Available Flights</h1>
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row">
-        
-                            <div class="col">
-                                <a href= "/project/login/user/<%= sampleData[sampleData.length-1].user_id %>" class="btn btn-info  float-end">Back to User Portal</a>
-                            </div>
-                        </div>
-                    </div>
+            <a class="navbar-brand" href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>">
+                <img src="/image/logo1.png" alt="Hust Airline Logo" width="40" height="40"
+                    class="d-inline-block align-text-center"> HUST Airline</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>#about">Giới
+                            thiệu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>#contact">Liên
+                            Hệ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/my_profile">
+                            <img src="/image/profile.jpg" alt="Logo" width="30" height="30"
+                                class="d-inline-block align-text-center rounded-circle" style="border-radius: 50%;">
+                            <%= sampleData[0].user_name %>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form method="POST" action="/project/logout">
+                            <button class="btn btn-login" type="submit" style="background-color: #17a2b8; /* Green color */
+                            color: white; /* Text color */">Đăng xuất</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-                    
-                    <div class="card-header">
-                        <% if(message.success) { %>
-                            <div class="alert alert-success">
-                                <%= message.success %>
-                            </div>
-                        <% } %>
-                        
-                        <% if(message.fail) { %>
-                                <div class="alert alert-danger">
-                                    <%= message.fail %>
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Sidebar -->
+            <nav id="sidebar" class="col-md-3 col-lg-2 sidebar">
+                <div class="position-sticky">
+                    <p></p>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-center d-flex align-items-center justify-content-center h4"
+                                href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>#searchFlight"
+                                type="">
+                                Đặt vé
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-center d-flex align-items-center justify-content-center h4"
+                                href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/my_tickets"
+                                type="">
+                                Vé của tôi
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-center d-flex align-items-center justify-content-center h4"
+                                href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/my_profile"
+                                type="">
+                                Hồ sơ của tôi
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-center d-flex align-items-center justify-content-center h4"
+                                href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/setting"
+                                type="">
+                                Cài đặt
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-0">
+                <div class="jumbotron">
+                    <h1 class="text-center mt-3 mb-3">Các chuyến bay</h1>
+                    <div class="card">
+
+                        <div class="card-header">
+                            <% if(message.success) { %>
+                                <div class="alert alert-success">
+                                    <%= message.success %>
                                 </div>
-                        <% } %>
-                    </div>
-       
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th>Flight Id</th>
-                                    <th>Flight Number</th>
-                                    <th>Type</th>
-                                    <th>Date</th>
-                                    <th>Source</th>
-                                    <th>Dest</th>
-                                    <th>Dept Time</th>
-                                    <th>Arr Time</th>
-                                    <th>Fare</th>
-                                    <th>Rem seats</th>
-                                    <th>Action</th>
-                                </tr>
-                                <%
-                                if(sampleData.length > 1)
-                                {
-                                    for(i=0; i < sampleData.length -1;i++)
-                                    {
-                                %>
-                                <tr>
-                                    <td><%= sampleData[i].f_id %></td>
-                                    <td><%= sampleData[i].f_number %></td>
-                                    <td><%= sampleData[i].f_type %></td>
-                                    <td><%= sampleData[i].f_date %></td>
-                                    <td><%= sampleData[i].f_source %></td>
-                                    <td><%= sampleData[i].f_dest %></td>
-                                    <td><%= sampleData[i].f_dept_time %></td>
-                                    <td><%= sampleData[i].f_arr_time %></td>
-                                    <td><%= sampleData[i].f_fare %></td>
-                                    <td><%= sampleData[i].f_remseats %></td>
-                                    <td>
-                                        <a href = "/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/form_submit/booking/<%= sampleData[i].f_id %>" class = "btn btn-primary btn-sm">Book Ticket</a>
-                                    </td>
-                                    
-                                </tr>
-                                <%
-                                    };
-                                }
-                                else
-                                {
-                                %>
-                                <tr>
-                                    <td colspan="5">No Flights Available</td>
-                                </tr>
-                                <%
-                                }
-                                %>
-                            </table>
+                                <% } %>
+
+                                    <% if(message.fail) { %>
+                                        <div class="alert alert-danger">
+                                            <%= message.fail %>
+                                        </div>
+                                        <% } %>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>ID chuyến bay</th>
+                                        <th>Số hiệu</th>
+                                        <th>Loại</th>
+                                        <th>Ngày</th>
+                                        <th>Từ</th>
+                                        <th>Đến</th>
+                                        <th>Thời gian đi</th>
+                                        <th>Thời gian đến</th>
+                                        <th>Giá</th>
+                                        <th>Chỗ còn</th>
+                                        <th>Đặt vé</th>
+                                    </tr>
+                                    <% if(sampleData.length> 1) {
+                                        for(i=0; i < sampleData.length - 1;i++) { %>
+                                            <tr>
+                                                <td>
+                                                    <%= sampleData[i].f_id %>
+                                                </td>
+                                                <td>
+                                                    <%= sampleData[i].f_number %>
+                                                </td>
+                                                <td>
+                                                    <%= sampleData[i].f_type %>
+                                                </td>
+                                                <td>
+                                                    <%= sampleData[i].f_date %>
+                                                </td>
+                                                <td>
+                                                    <%= sampleData[i].f_source %>
+                                                </td>
+                                                <td>
+                                                    <%= sampleData[i].f_dest %>
+                                                </td>
+                                                <td>
+                                                    <%= sampleData[i].f_dept_time %>
+                                                </td>
+                                                <td>
+                                                    <%= sampleData[i].f_arr_time %>
+                                                </td>
+                                                <td>
+                                                    <%= sampleData[i].f_fare %>
+                                                </td>
+                                                <td>
+                                                    <%= sampleData[i].f_remseats %>
+                                                </td>
+                                                <td>
+                                                    <a href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/form_submit/booking/<%= sampleData[i].f_id %>"
+                                                        class="btn btn-primary btn-sm">Đặt Vé</a>
+                                                </td>
+                                            </tr>
+                                            <% }; } else { %>
+                                                <tr>
+                                                    <td colspan="5">Không có chuyến bay</td>
+                                                </tr>
+                                                <% } %>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-        </div>  
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    </body>
+            </main>
+
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
 </html>
-    

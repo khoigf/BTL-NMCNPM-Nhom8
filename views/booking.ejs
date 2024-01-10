@@ -10,94 +10,221 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title></title>
+    <title>Booking</title>
+    <link rel='stylesheet' href='/stylesheets/styleUser.css' />
+    <style>
+        .jumbotron {
+            background: url("/image/ai.png");
+            color: #000000;
+            padding: 0 0;
+            margin-bottom: 6.5px;
+        }
+
+        .jumbotron h1 {
+            font-size: 3.0em;
+            font-weight: bold;
+            color: white;
+        }
+
+        .card {
+            margin: 0 50px;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1 class="text-center mt-3 mb-3">Enter Booking details</h1>
-        <div class="card">
-            <div class="card-body">
-                <form method="POST"
-                    action="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/form_submit/booking/<%= sampleData[0].f_id %>">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="float-sm-start">Your Selection</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label>User ID</label>
-                                <input type="text" name="user_id" id="user_id" class="form-control"
-                                    value="<%= sampleData[sampleData.length-1].user_id %>" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label>Flight Number</label>
-                                <input type="text" name="f_no" id="f_no" class="form-control"
-                                    value="<%= sampleData[sampleData.length - sampleData.length].f_number %>"
-                                    readonly />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label>Flight Type</label>
-                                <input type="text" name="type" id="type" class="form-control"
-                                    value="<%= sampleData[sampleData.length - sampleData.length].f_type%>" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label>Flight Date</label>
-                                <input type="date" name="date" id="date" class="form-control"
-                                    value="<%= sampleData[sampleData.length - sampleData.length].f_date%>" readonly />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="float-sm-start"> Enter Passenger details</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label>Name</label>
-                                <input type="text" name="name" id="name" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label>Age</label>
-                                <input type="text" name="age" id="age" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label>Gender </label>
-                                <select name="gender" id="gender" class="form-control">
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-
-                        <input type="submit" name="submit_button" class="btn btn-primary" value="Confirm Booking" />
-                    </div>
-                </form>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>">
+                <img src="/image/logo1.png" alt="Hust Airline Logo" width="40" height="40"
+                    class="d-inline-block align-text-center"> HUST Airline</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>#about">Giới
+                            thiệu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>#contact">Liên
+                            Hệ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/my_profile">
+                            <img src="/image/profile.jpg" alt="Logo" width="30" height="30"
+                                class="d-inline-block align-text-center rounded-circle" style="border-radius: 50%;">
+                            <%= sampleData[0].user_name %>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form method="POST" action="/project/logout">
+                            <button class="btn btn-login" type="submit" style="background-color: #17a2b8; /* Green color */
+                            color: white; /* Text color */">Đăng xuất</button>
+                        </form>
+                    </li>
+                </ul>
             </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Sidebar -->
+            <nav id="sidebar" class="col-md-3 col-lg-2 sidebar">
+                <div class="position-sticky">
+                    <p></p>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-center d-flex align-items-center justify-content-center h4"
+                                href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>#searchFlight"
+                                type="">
+                                Đặt vé
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-center d-flex align-items-center justify-content-center h4"
+                                href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/my_tickets"
+                                type="">
+                                Vé của tôi
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-center d-flex align-items-center justify-content-center h4"
+                                href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/my_profile"
+                                type="">
+                                Hồ sơ của tôi
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-center d-flex align-items-center justify-content-center h4"
+                                href="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/setting"
+                                type="">
+                                Cài đặt
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-0">
+                <div class="jumbotron">
+                    <h1 class="display-4">Thông tin vé</h1>
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="POST"
+                                action="/project/login/user/<%= sampleData[sampleData.length-1].user_id %>/form_submit/booking/<%= sampleData[0].f_id %>">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="text-center">Lựa chọn của bạn</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label>ID Người dùng</label>
+                                            <input type="text" name="user_id" id="user_id" class="form-control"
+                                                value="<%= sampleData[sampleData.length-1].user_id %>" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label>Số hiệu chuyến bay</label>
+                                            <input type="text" name="f_no" id="f_no" class="form-control"
+                                                value="<%= sampleData[sampleData.length - sampleData.length].f_number %>"
+                                                readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label>Loại</label>
+                                            <input type="text" name="type" id="type" class="form-control"
+                                                value="<%= sampleData[sampleData.length - sampleData.length].f_type%>"
+                                                readonly />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label>Ngày</label>
+                                            <input type="date" name="date" id="date" class="form-control"
+                                                value="<%= sampleData[sampleData.length - sampleData.length].f_date%>"
+                                                readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label>Từ</label>
+                                            <input type="text" name="from" id="from" class="form-control"
+                                                value="<%= sampleData[sampleData.length - sampleData.length].f_source%>"
+                                                readonly />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label>Đến</label>
+                                            <input type="text" name="to" id="to" class="form-control"
+                                                value="<%= sampleData[sampleData.length - sampleData.length].f_dest%>"
+                                                readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="center">Nhập thông tin khách hàng</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label>Họ&Tên</label>
+                                            <input type="text" name="name" id="name" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label>Tuổi</label>
+                                            <input type="text" name="age" id="age" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label>Giới Tính </label>
+                                            <select name="gender" id="gender" class="form-control">
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+
+                                    <input type="submit" name="submit_button" class="btn btn-primary" value="Đặt vé" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
