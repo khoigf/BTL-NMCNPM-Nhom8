@@ -109,7 +109,7 @@ const postResetPassword = async (req, res) => {
             req.session.resetCode = undefined;
             req.session.resetEmail = undefined;
 
-            res.redirect('/project/login/user/' + obj.uId);
+            res.redirect('/project');
         });
     } catch (error) {
         console.error(error);

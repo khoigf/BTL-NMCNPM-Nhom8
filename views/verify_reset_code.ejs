@@ -17,16 +17,18 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            background-color: #f8f9fa; /* Thêm màu nền */
-        }
-
-        .container {
-            margin-top: 50px; /* Thêm khoảng cách từ top */
+            background-image: url("../image/banner1.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
         }
 
         .card {
             background-color: rgba(0, 0, 0, 0.1);
             border: none;
+            margin-top: 150px;
+            text-align: center;
         }
 
         .card-header {
@@ -35,18 +37,19 @@
 
         .form-label {
             font-weight: bold;
-            color: #000;
+            color: #ffffff;
         }
 
         .form-control {
             border: none;
             border-bottom: 2px solid #000;
             background-color: transparent;
-            color: #000;
+            color: #ffffff;
         }
 
         .btn-primary {
-            width: 100%; /* Điều chỉnh chiều rộng button */
+            width: 100%;
+            /* Điều chỉnh chiều rộng button */
             margin-bottom: 10px;
             border: 1px solid #af0957;
             background-color: #af0957;
@@ -69,18 +72,24 @@
                             <div class="alert alert-danger">
                                 <%= message.fail %>
                             </div>
-                        <% } %>
+                            <% } %>
 
-                        <form method="POST" action="/project/verify_reset_code"> <!-- Thay đổi action để trỏ đúng đường dẫn -->
-                            <div class="mb-3">
-                                <label for="resetCode" class="form-label">Mã gồm 5 kí tự</label>
-                                <input type="text" id="resetCode" name="resetCode" class="form-control" required />
-                            </div>
+                                <form method="POST" action="/project/verify_reset_code">
+                                    <!-- Thay đổi action để trỏ đúng đường dẫn -->
+                                    <div class="mb-3">
+                                        <label for="resetCode" class="form-label">Mã gồm 5 kí tự</label>
+                                        <input type="text" id="resetCode" name="resetCode" class="form-control"
+                                            required />
+                                    </div>
 
-                            <div class="mb-3 text-center">
-                                <button type="submit" name="submit_button" class="btn btn-primary">Xác nhận</button>
-                            </div>
-                        </form>
+                                    <div class="mb-3 text-center">
+                                        <button type="submit" name="submit_button" class="btn btn-primary">Xác
+                                            nhận</button>
+                                    </div>
+                                </form>
+                                <button onclick="window.location.href='/project'" class="btn btn-secondary">Quay về
+                                    trang đăng
+                                    nhập</button>
                     </div>
                 </div>
             </div>
