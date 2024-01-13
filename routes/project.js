@@ -2,6 +2,7 @@ var express = require('express');
 var read = require('fs');
 let obj;
 var router = express.Router();
+const { getForgotpassword, postForgotpassword, getVerifyResetCode, postVerifyResetCode, getResetPassword, postResetPassword } = require('../controller/homeController');
 const {getLogin,postLogin,getResigter,postResigter,getAdminLogin,postAdminLogin, postLogout, getUserHomepage, postAdminLogout, getAdminHome} = require('../controller/homeController');
 const { count } = require('console');
 const { getMyTickets, getMyProfile, getUpdateProfile, postUpdateProfile, getCancelTicket, postFlight, getBooking,
@@ -103,5 +104,17 @@ router.get("/login/user/:uid/:b_id/ticketInfo",getTicketInfo);
 router.post("/logout",postLogout);
 
 router.post("/admin/logout",postAdminLogout);
+
+router.get('/forgot_password', getForgotpassword);
+
+router.post('/forgot_password', postForgotpassword);
+
+router.get('/verify_reset_code', getVerifyResetCode);
+
+router.post('/verify_reset_code', postVerifyResetCode);
+
+router.get('/reset_password', getResetPassword);
+
+router.post('/reset_password', postResetPassword);
 
 module.exports = router;

@@ -1,12 +1,122 @@
 var database = require('../database');
 var read = require('fs');
 let obj;
-read.readFile('./saved.json' , 'utf-8' , (err , data)=>{
-   // console.log(data);
-    //console.log(typeof(data));
-    obj = JSON.parse(data);
-    //console.log(obj);
-})
+function readSavedData() {
+    read.readFile('./saved.json' , 'utf-8' , (err , data)=>{
+        // console.log(data);
+        //console.log(typeof(data));
+        obj = JSON.parse(data);
+        //console.log(obj);
+    });
+}
+
+readSavedData();
+
+const getForgotpassword = (request, response, next) => {
+    response.render('forgot_password', { message: request.flash() });
+}
+
+// const nodemailer = require('nodemailer');
+const sendEmail = require('./sendEmail.js'); 
+const postForgotpassword = (request, response, next) => {
+    var email = request.body.email;
+
+    if (email) {
+        var verificationCode = Math.random().toString(36).substring(2, 7).toUpperCase();
+        sendEmail(email, 'Verification Code', `Your verification code is: ${verificationCode}`);
+        request.session.resetCode = verificationCode;
+        request.session.resetEmail = email;
+        response.redirect('/project/verify_reset_code');
+    } else {
+        request.flash('fail', 'Vui lòng nhập địa chỉ email của bạn.');
+        response.redirect('/project/forgot_password');
+    }
+}
+
+ const { validationResult } = require('express-validator');
+// const read = require('fs').promises;
+
+const getVerifyResetCode = (req, res) => {
+    res.render('verify_reset_code', { message: req.flash() }); 
+};
+
+const postVerifyResetCode = async (req, res) => {
+    try {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).render('verify_reset_code', {
+                errors: errors.array(),
+            });
+        }
+
+        const enteredCode = req.body.resetCode;
+
+        const savedCode = req.session.resetCode;
+        const savedEmail = req.session.resetEmail;
+
+        if (enteredCode === savedCode) {
+            res.redirect('/project/reset_password');
+        } else {
+            res.status(400).render('verify_reset_code', {
+                errors: [{ msg: 'Mã reset code không hợp lệ.' }],
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+
+
+const getResetPassword = (req, res) => {
+    res.render('reset_password', { message: req.flash() });
+};
+const postResetPassword = async (req, res) => {
+    try {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).render('reset_password', {
+                errors: errors.array(),
+            });
+        }
+
+        const newPassword = req.body.newPassword;
+        const confirmNewPassword = req.body.confirmNewPassword;
+
+        if (newPassword !== confirmNewPassword) {
+            return res.status(400).render('reset_password', {
+                errors: [{ msg: 'Mật khẩu mới và xác nhận không khớp.' }],
+            });
+        }
+
+        const resetEmail = req.session.resetEmail;
+        const query = `
+            UPDATE users
+            SET user_password = "${newPassword}"
+            WHERE user_email = "${resetEmail}"
+        `;
+
+        database.query(query, (error, results) => {
+            if (error) {
+                console.error(error);
+                return res.status(500).send('Internal Server Error');
+            }
+
+            // Làm sạch session sau khi đã đặt lại mật khẩu
+            req.session.resetCode = undefined;
+            req.session.resetEmail = undefined;
+
+            res.redirect('/project/login/user/' + obj.uId);
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
 
 const getLogin = (request, response, next)=>{
     response.render('project', {message : request.flash()});       
@@ -239,6 +349,7 @@ const getAdminHome = (request, response, next)=>{
     request.flash('fail','You have to login');
     response.redirect(`/project/admin_cred`);
 }
+
 }
 module.exports = {
     getLogin,
@@ -250,5 +361,11 @@ module.exports = {
     postLogout,
     getUserHomepage,
     postAdminLogout,
-    getAdminHome
+    getAdminHome,
+    getForgotpassword,
+    postForgotpassword,
+    getVerifyResetCode,
+    postVerifyResetCode,
+    getResetPassword,
+    postResetPassword
 }
